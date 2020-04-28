@@ -6,7 +6,7 @@ This page is used to inform visitors regarding my policies with the collection, 
 
 If you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.
 
-This Privacy Policy applies to all of Fitmers' services. By using Fitmer you agree to this as well as our [Terms Of Service.](https://fitmer.web.app/#/terms-of-service)
+This Privacy Policy applies to all of Fitmers' services. By using Fitmer you agree to this as well as our [Terms Of Service](https://fitmer.web.app/#/terms-of-service)
 
 **Information Collection and Use**
 

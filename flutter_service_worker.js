@@ -3,7 +3,7 @@ const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "index.html": "5a32f8ccf2809d326ff274e20d71dc39",
 "/": "5a32f8ccf2809d326ff274e20d71dc39",
-"main.dart.js": "4b787dcffe023896632d3e43a299f4f9",
+"main.dart.js": "5209a526665bacf03b8d33657be44ec7",
 "favicon.png": "4262468ff1012464beb4c19acb585d5e",
 "icons/Icon-192.png": "e3f9c1b62a4b599c3ac11fddd19df082",
 "icons/Icon-512.png": "608333fe4fac00b538025a5608d9e110",
@@ -17,7 +17,7 @@ const RESOURCES = {
 "assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "5a37ae808cf9f652198acde612b5328d",
 "assets/packages/flutter_markdown/assets/logo.png": "67642a0b80f3d50277c44cde8f450e50",
 "assets/fonts/MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
-"assets/assets/privacy-policy.md": "6cbd878a9c505e7f19cc3e415ed37799",
+"assets/assets/privacy-policy.md": "60f8b0f803ee949840e8d78d6cb630e7",
 "assets/assets/sounds/sound_bell_boxing_1.wav": "0faec93f7212dafc7a5afe33aeb78965",
 "assets/assets/sounds/sound_bell_boxing_3.wav": "2efae6d85a3bb90a6437ab1cb0f3b94f",
 "assets/assets/sounds/sound_click.wav": "94f0f74edc3195ab742018bc5928c5db",
