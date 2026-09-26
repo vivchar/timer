@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Opening Fitmer…</title>
+  <style>
+    html,body{height:100%;margin:0;background:#0E0F12;color:#E7E9EC;
+      font:500 16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+    main{height:100%;display:flex;flex-direction:column;gap:16px;
+      align-items:center;justify-content:center;text-align:center;padding:24px}
+    a{color:#9AA3AD}
+  </style>
+</head>
+<body>
+  <main>
+    <div>Opening Fitmer…</div>
+    <a id="manual" href="https://fitmer.tom.ru/">Tap here if it doesn’t open</a>
+  </main>
+  <script>
+  // Smart store-redirect with per-channel attribution.
+  // Usage in posts: https://fitmer.tom.ru/go?ch=<channel>[&c=<campaign>]
+  // ch ∈ canonical vocabulary (docs/superpowers/specs/2026-06-26-install-attribution-utm-design.md)
+  (function () {
+    var APPLE = 'https://apps.apple.com/app/apple-store/id1509055701?pt=121440697&mt=8&ct=';
+    var PLAY  = 'https://play.google.com/store/apps/details?id=com.vivchar.fitmer&referrer=';
+    var WEB   = 'https://fitmer.tom.ru/';
+    // GoatCounter endpoint. ПУСТО по умолчанию → клик-beacon НЕ шлётся.
+    // Заполнить ТОЛЬКО после регистрации сайта в GoatCounter, иначе beacon уйдёт на
+    // незаклеймленный поддомен — его может занять кто угодно и собирать твою
+    // клик-телеметрию. После регистрации: 'https://<твой-код>.goatcounter.com/count'
+    var GC    = 'https://fitmer.goatcounter.com/count';
+
+    var p = new URLSearchParams(location.search);
+    var ch = (p.get('ch') || 'direct').toLowerCase();
+    if (!/^[a-z0-9_-]{1,40}$/.test(ch)) ch = 'other';
+    var camp = (p.get('c') || 'social').toLowerCase();
+    if (!/^[a-z0-9_-]{1,40}$/.test(camp)) camp = 'social';
+
+    var ua = navigator.userAgent || '';
+    var isAndroid = /android/i.test(ua);
+    var isIOS = /iphone|ipad|ipod/i.test(ua) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPadOS
+    var platform = isIOS ? 'ios' : isAndroid ? 'android' : 'web';
+
+    var target;
+    if (platform === 'ios') {
+      target = APPLE + encodeURIComponent(ch);
+    } else if (platform === 'android') {
+      target = PLAY + encodeURIComponent('utm_source=' + ch + '&utm_medium=social&utm_campaign=' + camp);
+    } else {
+      target = WEB + '?utm_source=' + encodeURIComponent(ch) + '&utm_medium=social';
+    }
+    document.getElementById('manual').href = target;
+
+    // Top of funnel: count click as a virtual path /go/<ch>/<platform> in GoatCounter.
+    // Skipped entirely while GC is unset (no beacon to an unclaimed endpoint).
+    try {
+      if (GC) {
+        var beacon = GC + '?p=' + encodeURIComponent('/go/' + ch + '/' + platform);
+        if (navigator.sendBeacon) navigator.sendBeacon(beacon);
+        else { var img = new Image(); img.src = beacon; }
+      }
+    } catch (e) {}
+
+    setTimeout(function () { location.replace(target); }, 250);
+  })();
+  </script>
+</body>
+</html>

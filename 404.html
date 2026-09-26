@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Путь хостинга. Плейсхолдер подставляется значением флага `--base-href`
+    на `flutter build web` (для корня домена fitmer.tom.ru → "/").
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- SEO: основная разметка -->
+  <title>Fitmer — Interval Timer for HIIT, Tabata, EMOM &amp; Rounds</title>
+  <meta name="description" content="Free interval timer for HIIT, Tabata, EMOM, AMRAP, For Time and round-based training. Six modes, clear audio cues, a big readable timer, background &amp; locked-screen running. No account — open and go.">
+  <meta name="keywords" content="interval timer, tabata timer, hiit timer, emom timer, amrap timer, gym timer, workout timer, crossfit timer, boxing round timer, free interval timer">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#141920">
+  <meta name="author" content="Vivchar">
+  <link rel="canonical" href="https://fitmer.tom.ru/">
+
+  <!-- Open Graph (Telegram/WhatsApp/Facebook/iMessage превью) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fitmer">
+  <meta property="og:title" content="Fitmer — Interval Timer for HIIT, Tabata, EMOM &amp; Rounds">
+  <meta property="og:description" content="Free interval timer for HIIT, Tabata, EMOM, AMRAP, For Time and rounds. Six modes, clear audio cues, big readable timer, background mode. No account — open and go.">
+  <meta property="og:url" content="https://fitmer.tom.ru/">
+  <meta property="og:image" content="https://fitmer.tom.ru/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fitmer — interval fitness timer">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fitmer — Interval Timer for HIIT, Tabata, EMOM &amp; Rounds">
+  <meta name="twitter:description" content="Free interval timer for HIIT, Tabata, EMOM, AMRAP, For Time and rounds. Six modes, clear audio cues, big readable timer. No account — open and go.">
+  <meta name="twitter:image" content="https://fitmer.tom.ru/og-image.png">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Fitmer">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Structured data: приложение (Google rich result — категория, цена, платформы) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Fitmer",
+    "applicationCategory": "HealthApplication",
+    "applicationSubCategory": "Interval Timer",
+    "operatingSystem": "iOS, Android, Web, macOS",
+    "inLanguage": ["en", "ru"],
+    "url": "https://fitmer.tom.ru/",
+    "description": "Free interval timer for HIIT, Tabata, EMOM, AMRAP, For Time and round-based training. Six modes, clear audio cues, a big readable timer and background running.",
+    "image": "https://fitmer.tom.ru/og-image.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "downloadUrl": [
+      "https://apps.apple.com/app/id1509055701",
+      "https://play.google.com/store/apps/details?id=com.vivchar.fitmer"
+    ]
+  }
+  </script>
+
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    /* Брендовый slate, чтобы не мелькал белый кадр до первого фрейма Flutter. */
+    body { background-color: #1F242B; }
+
+    /*
+      Статичный SEO-/no-JS-контент. Виден краулеру и пользователю до первого
+      фрейма Flutter (CanvasKit рисует на канвасе — для бота <body> иначе пустой).
+      Удаляется JS-ом по событию `flutter-first-frame` (см. скрипт ниже).
+    */
+    #seo-content {
+      position: fixed; inset: 0; z-index: 0; overflow: auto;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; gap: 14px;
+      padding: 32px 22px;
+      color: #EEF1F4; background: #1F242B;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    #seo-content h1 { font-size: 28px; margin: 0; color: #FFFFFF; }
+    #seo-content p { max-width: 560px; margin: 0; color: #9AA5B3; }
+    #seo-content ul {
+      list-style: none; padding: 0; margin: 4px 0 0;
+      max-width: 560px; text-align: left; color: #9AA5B3;
+    }
+    #seo-content li { margin: 4px 0; }
+    #seo-content .stores { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+    #seo-content a { color: #4BDE7F; text-decoration: none; }
+    #seo-content .loading { color: #6C7785; font-size: 13px; margin-top: 8px; }
+    #seo-content .ru {
+      max-width: 560px; margin-top: 18px; padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    #seo-content .ru h2 { font-size: 19px; margin: 0 0 8px; color: #EEF1F4; }
+    #seo-content h2 { font-weight: 700; }
+
+    /* Брендовый дисплейный шрифт для вордмарка заставки (тот же Archivo, что в
+       приложении). Лежит в web/fonts → копируется в build/web/fonts. */
+    @font-face {
+      font-family: 'Archivo';
+      src: url('fonts/Archivo-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /*
+      Брендовая заставка поверх SEO-контента: пользователь видит вордмарк FITMER на
+      фирменном фоне, а не служебный en/ru текст, пока Flutter не отрисует первый
+      кадр. SEO-блок при этом остаётся в DOM для краулеров (под заставкой).
+    */
+    #app-splash {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      background: #21262E;   /* тот же фон, что у нативного splash iOS/Android */
+    }
+    #app-splash .wordmark {
+      font-family: 'Archivo', system-ui, -apple-system, sans-serif;
+      font-weight: 900;
+      /* умеренный размер ~как нативный splash: ~180–192px ширины на мобильном,
+         кап 46px (≈192px) на десктопе — не разрастается на широких экранах. */
+      font-size: clamp(40px, 12vw, 46px);
+      letter-spacing: -.01em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: #FFFFFF;
+      animation: splash-pulse 1.4s ease-in-out infinite;
+    }
+    #app-splash .wordmark .mer { color: #4BDE7F; }
+    @keyframes splash-pulse {
+      0%, 100% { opacity: .55; }
+      50%      { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!--
+    Статичный контент для поисковиков и пользователей без JS. Не несёт
+    функциональности (таймер — внутри Flutter-приложения), но даёт боту читаемый
+    H1, описание, список режимов и ссылки на сторы. Скрывается на первом фрейме.
+  -->
+  <div id="seo-content">
+    <h1>Fitmer — Interval Timer for HIIT &amp; Tabata</h1>
+    <p>
+      A fast, no-nonsense interval timer for HIIT, Tabata, EMOM, AMRAP, For Time
+      and round-based training. Set it up in seconds, hit start, and keep your eyes
+      on the workout — not the screen.
+    </p>
+    <ul>
+      <li>• <strong>Tabata / Intervals</strong> — work and rest rounds with custom timing</li>
+      <li>• <strong>EMOM</strong> — every minute on the minute</li>
+      <li>• <strong>AMRAP</strong> — as many rounds as possible in a fixed time</li>
+      <li>• <strong>For Time</strong> — race the clock to finish</li>
+      <li>• <strong>Rounds</strong> — fully custom interval sequences</li>
+      <li>• <strong>Stopwatch</strong> — simple count-up timing</li>
+    </ul>
+    <p>
+      Clear audio cues and a 3-2-1 countdown, a big readable timer, background and
+      locked-screen running, and a dark distraction-free interface. No account, no
+      sign-up — open and go.
+    </p>
+    <div class="stores">
+      <a href="https://apps.apple.com/app/id1509055701" rel="noopener">Download on the App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.vivchar.fitmer" rel="noopener">Get it on Google Play</a>
+    </div>
+    <div class="loading">Loading the timer…</div>
+    <noscript>
+      <p style="color:#9AA5B3">This web app needs JavaScript enabled to run the timer.</p>
+    </noscript>
+
+    <!-- Русскоязычный crawlable-блок (домен .ru, RU-аудитория) -->
+    <section lang="ru" class="ru">
+      <h2>Fitmer — интервальный таймер для HIIT и табаты</h2>
+      <p>
+        Быстрый и простой интервальный таймер для HIIT, табаты, EMOM, AMRAP,
+        For Time и раундовых тренировок. Настрой за секунды, жми старт и смотри
+        на тренировку, а не на экран.
+      </p>
+      <ul>
+        <li>• <strong>Табата / Интервалы</strong> — раунды работы и отдыха с любым таймингом</li>
+        <li>• <strong>EMOM</strong> — каждую минуту в начале минуты</li>
+        <li>• <strong>AMRAP</strong> — максимум кругов за отведённое время</li>
+        <li>• <strong>For Time</strong> — успей закончить на скорость</li>
+        <li>• <strong>Раунды</strong> — полностью настраиваемые последовательности интервалов</li>
+        <li>• <strong>Секундомер</strong> — простой счёт вверх</li>
+      </ul>
+      <p>
+        Чёткие звуковые сигналы и отсчёт 3-2-1, крупный читаемый таймер, работа в
+        фоне и при заблокированном экране, тёмный интерфейс без отвлечений. Без
+        аккаунта и регистрации — открыл и пошёл.
+      </p>
+    </section>
+  </div>
+
+  <!-- Брендовая заставка-оверлей: перекрывает SEO-текст для пользователя
+       (для краулеров он остаётся в DOM ниже). Снимается на первом фрейме. -->
+  <div id="app-splash" aria-hidden="true">
+    <div class="wordmark">FIT<span class="mer">MER</span></div>
+  </div>
+
+  <!-- Современный загрузчик (Flutter 3.22+): сам тянет build-config и
+       регистрирует service worker. Заменяет старую связку
+       if (!window._flutter) {
+  window._flutter = {};
+}
+_flutter.buildConfig = {"engineRevision":"c416acfeb8126e097f758c664aaa3da929e27da0","builds":[{"compileTarget":"dart2js","renderer":"canvaskit","mainJsPath":"main.dart.js"},{}]};
+ + flutter.js + _flutter.loader.load. -->
+  <script src="flutter_bootstrap.js" async></script>
+
+  <!-- Снимаем заставку и SEO-блок, как только Flutter отрисовал первый кадр. -->
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      ['app-splash', 'seo-content'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.remove();
+      });
+    });
+    // Фолбэк: если первый кадр так и не пришёл (ошибка загрузки) — через 20с
+    // убираем заставку, чтобы показать статический контент со ссылками на сторы.
+    setTimeout(function () {
+      var s = document.getElementById('app-splash');
+      if (s) s.remove();
+    }, 20000);
+  </script>
+</body>
+</html>
