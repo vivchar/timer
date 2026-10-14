@@ -1,0 +1,35 @@
+{
+    "name": "Fitmer",
+    "short_name": "Fitmer",
+    "start_url": ".",
+    "display": "minimal-ui",
+    "background_color": "#21262E",
+    "theme_color": "#141920",
+    "description": "Free interval timer for HIIT, Tabata, EMOM, AMRAP, For Time and rounds. Six modes, clear audio cues and a big readable timer.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
