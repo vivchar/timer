@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="dark">
+  <title>Workout in Fitmer</title>
+  <!-- Страница ссылки на тренировку (docs/specs/workout-share-links.md).
+       Данные тренировки — во фрагменте (#…), сервер их не видит, поэтому превью
+       в мессенджерах общее. Таймера здесь нет намеренно: только описание,
+       «Открыть в Fitmer» и сторы. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fitmer">
+  <meta property="og:title" content="A workout for you in Fitmer">
+  <meta property="og:description" content="Open this interval workout in Fitmer: Tabata, EMOM, AMRAP, AFAP and custom intervals.">
+  <meta property="og:image" content="https://fitmer.web.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fitmer.web.app/og-image.png">
+  <link rel="icon" href="/favicon.png">
+  <style>
+    :root {
+      --bg: #0E0F12;
+      --surface: #17191E;
+      --line: #262A31;
+      --text: #E7E9EC;
+      --muted: #9AA3AD;
+      --green: #4BDE7F;
+      --on-green: #0B1A10;
+      --hue: #4BDE7F;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text);
+      font: 500 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { min-height: 100vh; min-height: 100dvh; max-width: 440px; margin: 0 auto;
+      padding: 40px 16px calc(32px + env(safe-area-inset-bottom));
+      display: flex; flex-direction: column; gap: 20px; }
+    .mark { font: 800 22px/1 system-ui, -apple-system, sans-serif; letter-spacing: .04em; }
+    .mark b { color: var(--green); font-weight: 800; }
+    .card { background: var(--surface); border: 1px solid var(--line);
+      border-top: 3px solid var(--hue); border-radius: 20px; padding: 20px; }
+    .mode { color: var(--hue); font-weight: 700; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase; }
+    .name { font-size: 26px; font-weight: 800; line-height: 1.2; margin: 6px 0 10px;
+      overflow-wrap: anywhere; }
+    .params { color: var(--muted); font-size: 15px; }
+    .time { font: 700 34px/1 ui-monospace, "SF Mono", Menlo, monospace;
+      margin-top: 14px; font-variant-numeric: tabular-nums; }
+    p { margin: 0; color: var(--muted); }
+    .btn { display: flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 52px; border-radius: 16px; font-weight: 700; font-size: 17px;
+      text-decoration: none; border: 1px solid var(--line); color: var(--text);
+      background: var(--surface); }
+    .btn.primary { background: var(--green); color: var(--on-green); border-color: var(--green); }
+    .stores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stores .btn { font-size: 15px; }
+    .hint { font-size: 14px; text-align: center; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark" aria-label="Fitmer">FIT<b>MER</b></div>
+
+    <section class="card" id="card">
+      <div class="mode" id="mode">Fitmer</div>
+      <div class="name" id="name" data-t="genericTitle"></div>
+      <div class="params" id="params"></div>
+      <div class="time" id="time" hidden></div>
+    </section>
+
+    <p id="lead" data-t="lead"></p>
+
+    <a class="btn primary" id="open" href="#" hidden data-t="open"></a>
+
+    <div class="stores">
+      <a class="btn" id="appstore" href="/go?ch=share">App Store</a>
+      <a class="btn" id="play" href="/go?ch=share">Google Play</a>
+    </div>
+    <p class="hint" id="hint" hidden></p>
+  </main>
+
+  <script>
+  (function () {
+    var T = {
+      en: {
+        genericTitle: 'A workout for you',
+        lead: 'Fitmer is an interval timer for HIIT. Open this workout in the app — it will be ready to start.',
+        open: 'Open in Fitmer',
+        hintIos: 'Just installed Fitmer? Tap the link again to open the workout.',
+        hintDesktop: 'Open this link on your phone to start the workout in Fitmer.',
+        rounds: function (n) { return n + (n === 1 ? ' round' : ' rounds'); },
+        cycles: function (n) { return n + ' cycles'; },
+        blocks: function (n) { return n + (n === 1 ? ' block' : ' blocks'); },
+        work: 'work', rest: 'rest', cap: 'time cap'
+      },
+      ru: {
+        genericTitle: 'Тренировка для вас',
+        lead: 'Fitmer — интервальный таймер для тренировок. Откройте эту тренировку в приложении, она будет готова к старту.',
+        open: 'Открыть в Fitmer',
+        hintIos: 'Только что поставили Fitmer? Нажмите ссылку ещё раз, чтобы открыть тренировку.',
+        hintDesktop: 'Откройте эту ссылку на телефоне, чтобы начать тренировку в Fitmer.',
+        rounds: function (n) {
+          var m10 = n % 10, m100 = n % 100;
+          var w = m10 === 1 && m100 !== 11 ? 'раунд'
+            : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'раунда' : 'раундов';
+          return n + ' ' + w;
+        },
+        cycles: function (n) {
+          var m10 = n % 10, m100 = n % 100;
+          var w = m10 === 1 && m100 !== 11 ? 'цикл'
+            : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'цикла' : 'циклов';
+          return n + ' ' + w;
+        },
+        blocks: function (n) {
+          var m10 = n % 10, m100 = n % 100;
+          var w = m10 === 1 && m100 !== 11 ? 'блок'
+            : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'блока' : 'блоков';
+          return n + ' ' + w;
+        },
+        work: 'работа', rest: 'отдых', cap: 'лимит'
+      }
+    };
+    var lang = /^(ru|uk|be|kk)\b/i.test(navigator.language || '') ? 'ru' : 'en';
+    var t = T[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-t]').forEach(function (el) {
+      el.textContent = t[el.getAttribute('data-t')];
+    });
+
+    // Цвета и имена режимов — как в приложении (DS fm-hue-*).
+    var MODES = {
+      tabata: { name: 'Tabata', hue: '#4BDE7F' },
+      emom: { name: 'EMOM', hue: '#5AB8FF' },
+      amrap: { name: 'AMRAP', hue: '#FFB547' },
+      fortime: { name: 'AFAP', hue: '#A98BFF' },
+      rounds: { name: 'Intervals', hue: '#3FD1C2' }
+    };
+
+    function mmss(s) {
+      var m = Math.floor(s / 60), r = s % 60;
+      return m + ':' + (r < 10 ? '0' : '') + r;
+    }
+
+    // Payload: фрагмент ссылки (…/workout#<payload>) или ?d=<payload>.
+    var payload = new URLSearchParams(location.search).get('d') ||
+      location.hash.replace(/^#/, '');
+    // Тот же предел, что в приложении (kSharePayloadMaxLength): длиннее —
+    // не наша ссылка, не распаковываем и не передаём в приложение.
+    if (payload.length > 4096) payload = '';
+
+    var ua = navigator.userAgent || '';
+    var isAndroid = /android/i.test(ua);
+    // iPadOS притворяется Mac'ом с сенсором; Android — никогда не iOS.
+    var isIOS = !isAndroid && (/iphone|ipad|ipod/i.test(ua) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+
+    // «Открыть в Fitmer». Universal Link внутри того же домена iOS не
+    // перехватывает, поэтому здесь не https, а схема/intent.
+    var open = document.getElementById('open');
+    var playFallback = 'https://play.google.com/store/apps/details?id=com.vivchar.fitmer' +
+      '&referrer=' + encodeURIComponent('utm_source=share&utm_medium=link');
+    if (payload && /^[A-Za-z0-9_-]+$/.test(payload)) {
+      if (isIOS) {
+        open.href = 'fitmer://workout?d=' + payload;
+        open.hidden = false;
+      } else if (isAndroid) {
+        open.href = 'intent://workout?d=' + payload +
+          '#Intent;scheme=fitmer;package=com.vivchar.fitmer;S.browser_fallback_url=' +
+          encodeURIComponent(playFallback) + ';end';
+        open.hidden = false;
+      }
+    }
+
+    // Сторы: на телефоне — только свой, на десктопе — оба.
+    var appstore = document.getElementById('appstore');
+    var play = document.getElementById('play');
+    if (isIOS) { play.hidden = true; appstore.parentElement.style.gridTemplateColumns = '1fr'; }
+    if (isAndroid) { appstore.hidden = true; play.parentElement.style.gridTemplateColumns = '1fr'; }
+
+    var hint = document.getElementById('hint');
+    if (isIOS) { hint.textContent = t.hintIos; hint.hidden = false; }
+    else if (!isAndroid) { hint.textContent = t.hintDesktop; hint.hidden = false; }
+
+    if (!payload) return;
+
+    function b64urlToBytes(s) {
+      s = s.replace(/-/g, '+').replace(/_/g, '/');
+      while (s.length % 4) s += '=';
+      var bin = atob(s), out = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    }
+
+    function inflate(bytes) {
+      if (typeof DecompressionStream === 'undefined') return Promise.reject();
+      var stream = new Blob([bytes]).stream()
+        .pipeThrough(new DecompressionStream('deflate-raw'));
+      return new Response(stream).text();
+    }
+
+    function render(env) {
+      var m = MODES[env.k];
+      var c = env.c || {};
+      if (!m) return;
+      document.documentElement.style.setProperty('--hue', m.hue);
+      document.getElementById('mode').textContent = m.name;
+      document.getElementById('name').textContent = env.n || m.name;
+      var parts = [], total = null;
+      if (c.type === 'interval') {
+        var cycles = c.cycles || 1;
+        parts.push(t.rounds(c.rounds));
+        parts.push(mmss(c.work) + ' ' + t.work);
+        if (c.rest) parts.push(mmss(c.rest) + ' ' + t.rest);
+        if (cycles > 1) parts.push(t.cycles(cycles));
+        // Та же арифметика, что plannedSeconds в приложении.
+        total = (c.work + c.rest) * c.rounds * cycles +
+          (cycles - 1) * (c.restBetweenCycles || 0);
+      } else if (c.type === 'amrap' || c.type === 'fortime') {
+        parts.push(t.cap + ' ' + mmss(c.capSeconds));
+        total = c.capSeconds;
+      } else if (c.type === 'customInterval') {
+        var n = 0;
+        (c.items || []).forEach(function (it) {
+          n += it.type === 'cycle' ? (it.blocks || []).length : 1;
+        });
+        parts.push(t.blocks(n));
+      }
+      document.getElementById('params').textContent = parts.join(' · ');
+      if (total) {
+        var time = document.getElementById('time');
+        time.textContent = mmss(total);
+        time.hidden = false;
+      }
+    }
+
+    try {
+      inflate(b64urlToBytes(payload))
+        .then(function (json) {
+          if (json.length > 65536) return;  // как kShareJsonMaxLength
+          render(JSON.parse(json));
+        })
+        .catch(function () {});
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>

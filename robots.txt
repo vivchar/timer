@@ -1,0 +1,6 @@
+# Fitmer — fitmer.web.app
+# Разрешаем индексацию всего; Flutter-ассеты безвредны для краулера.
+User-agent: *
+Allow: /
+
+Sitemap: https://fitmer.web.app/sitemap.xml

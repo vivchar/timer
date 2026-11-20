@@ -1,0 +1,453 @@
+/* Лендинг fitmer.web.app (макет B3, docs/superpowers/specs/2026-11-20-landing-design.md).
+   Токены — дизайн-система Fitmer, тема Classic · Dark (lib/ui/theme/fitmer_colors.dart). */
+@font-face { font-family: Archivo; src: url(/landing/fonts/Archivo.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: Oswald; src: url(/landing/fonts/Oswald.woff2) format("woff2"); font-weight: 200 700; font-display: swap; }
+
+:root {
+  --ground: #1F242B; --ground-deep: #14181E; --ground-run: #22302A; --surface: #272D36; --surface-2: #323A45;
+  --control-fill: rgba(255,255,255,0.06); --track: #404A57; --hairline: rgba(255,255,255,0.06);
+  --ink: #EEF1F4; --ink-strong: #FFFFFF; --ink-soft: #C7CED6; --ink-muted: #9AA5B3;
+  --brand: #4BDE7F; --on-brand: #0E2417; --rest: #34C3FF; --prepare: #FFB020; --danger: #FF5247;
+  --rest-soft: #1A2A3A; --prepare-soft: #33301F;
+  --rim-panel: inset 0 1px 0 rgba(255,255,255,0.10); --rim-control: inset 0 1px 0 rgba(255,255,255,0.12);
+  --rim-accent: inset 0 1px 0 rgba(255,255,255,0.35);
+  --ui: Archivo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --num: Oswald, "Arial Narrow", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 16px/1.45 var(--ui); overflow-x: hidden; }
+a { color: var(--brand); }
+a:hover { color: #7CE9A2; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 8px; }
+img { display: block; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- шапка ---------- */
+.top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 28px 0; }
+.mark { font-weight: 900; font-size: 26px; letter-spacing: .5px; color: var(--ink-strong); text-decoration: none; }
+.mark span, .mark:hover span { color: var(--brand); }
+.mark:hover { color: var(--ink-strong); }
+/* Слоган бренда — та же бирка, что в рилсах (FITMER / MADE FOR ATHLETES). */
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand .tagline { padding-left: 12px; border-left: 2px solid var(--brand); font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-soft); line-height: 1.2; }
+footer .brand .tagline { font-size: 11px; color: var(--ink-muted); }
+.nav { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; font-size: 15px; font-weight: 700; }
+.nav a { color: var(--ink-soft); text-decoration: none; }
+.nav a:hover { color: var(--ink-strong); }
+/* Выбор языка: классический выпадающий список. */
+.lang { position: relative; }
+.lang summary { display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 12px; border-radius: 999px; color: var(--ink-soft); cursor: pointer; list-style: none; user-select: none; }
+.lang summary::-webkit-details-marker { display: none; }
+.lang summary:hover, .lang[open] summary { color: var(--ink-strong); background: var(--control-fill); }
+.lang .chev { transition: transform .15s; }
+.lang[open] .chev { transform: rotate(180deg); }
+.lang ul { position: absolute; right: 0; top: calc(100% + 8px); z-index: 5; min-width: 168px; margin: 0; padding: 6px; list-style: none; border-radius: 16px; background: var(--surface); box-shadow: var(--rim-panel), 0 18px 40px rgba(0,0,0,.45); }
+.lang li a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 10px; color: var(--ink); text-decoration: none; font-weight: 700; }
+.lang li a:hover { background: var(--control-fill); color: var(--ink-strong); }
+.lang li a[aria-current]::after { content: ""; width: 14px; height: 8px; margin-top: -4px; border: solid var(--brand); border-width: 0 0 2.5px 2.5px; transform: rotate(-45deg); }
+.lang li a[aria-current] { color: var(--brand); }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; background: var(--surface); box-shadow: var(--rim-control); color: var(--ink) !important; font-weight: 800; font-size: 14px; }
+.lang-hint { display: none; position: relative; z-index: 2; margin: 0 0 8px; padding: 10px 16px; border-radius: 14px; background: var(--surface); font-weight: 700; font-size: 15px; }
+.lang-hint.on { display: inline-block; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; padding: 40px 0 72px; }
+/* Полоса фото на всю ширину окна; к краям окна и сверху/снизу плавно растворяется. */
+.hero-bg { position: absolute; left: calc(50% - 50vw); right: calc(50% - 50vw); top: -30px; bottom: -40px; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 62%, transparent 94%), linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 62%, transparent 94%), linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+          mask-composite: intersect; }
+.hero-bg .strip { position: absolute; inset: 0; display: flex; filter: contrast(1.6) brightness(1.2); }
+.hero-bg .strip { overflow: hidden; }
+.hero-bg .strip img { flex: 1; min-width: 0; height: 100%; object-fit: cover; }
+.tint { position: absolute; inset: 0; background: var(--brand); mix-blend-mode: color; }
+.dots { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(31,36,43,0) 2px, rgba(31,36,43,0.86) 2.8px); background-size: 7px 7px; }
+.hero-bg .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(31,36,43,.82) 0%, rgba(31,36,43,.7) 38%, rgba(31,36,43,.25) 56%, rgba(31,36,43,.25) 100%); }
+.hero-copy { position: relative; z-index: 1; flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 26px; text-shadow: 0 2px 18px rgba(20,24,30,.7); }
+.eyebrow { font-size: 14px; font-weight: 800; letter-spacing: 2px; color: var(--brand); text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(44px, 6vw, 68px); line-height: 1.02; font-weight: 900; color: var(--ink-strong); }
+h1 span { color: var(--brand); }
+.lead { margin: 0; font-size: 20px; line-height: 1.5; color: var(--ink-soft); max-width: 520px; }
+.stores { display: flex; gap: 12px; flex-wrap: wrap; }
+/* Официальные бейджи сторов (site/landing/badges: Apple — developer.apple.com и Marketing Toolbox, Google — play.google.com). */
+.badge { display: inline-flex; border-radius: 9px; line-height: 0; text-shadow: none; transition: transform .15s; }
+.badge:hover { transform: translateY(-1px); }
+.badge img { height: 50px; width: auto; }
+.qr-card { align-self: flex-start; display: flex; gap: 16px; align-items: center; padding: 12px 18px 12px 12px; border-radius: 22px; background: var(--surface); box-shadow: var(--rim-panel); text-shadow: none; }
+.qr-card img { width: 96px; height: 96px; border-radius: 12px; image-rendering: pixelated; }
+.qr-card b { display: block; font-size: 16px; color: var(--ink-strong); }
+.qr-card span { display: block; max-width: 200px; font-size: 14px; line-height: 1.4; color: var(--ink-muted); }
+
+/* ---------- веер ---------- */
+.fan { position: relative; z-index: 1; flex: 1 1 460px; min-width: 0; height: 660px; }
+.glow { position: absolute; left: 50%; top: 50%; width: 540px; height: 540px; margin: -270px 0 0 -270px; border-radius: 999px; transition: background .5s;
+  background: radial-gradient(closest-side, var(--glow, rgba(75,222,127,.2)), rgba(0,0,0,0)); }
+.phone { position: absolute; border-radius: 38px; background: #0F1318; padding: 7px; box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.phone.side { width: 228px; height: 477px; }
+.phone.left { left: -48px; top: 95px; transform: rotate(-9deg); }
+.phone.right { right: -60px; top: 110px; transform: rotate(9deg); }
+.phone.center { left: 50%; top: 10px; width: 272px; height: 568px; margin-left: -136px; padding: 9px; border-radius: 46px; box-shadow: 0 40px 90px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.08); }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 31px; overflow: hidden; background: var(--ground); }
+.center .screen { border-radius: 37px; transition: background .4s; }
+/* Dynamic Island: 126×37 pt сверху 11 pt, в масштабе экрана. */
+.screen .isl { position: absolute; z-index: 2; left: 50%; top: 2.2%; width: 32%; height: 4.4%; transform: translateX(-50%); border-radius: 999px; background: #000; }
+/* Экраны свёрстаны в размере телефона 390×844 и уменьшены — пропорции как в приложении. */
+.app { position: absolute; left: 0; top: 0; width: 390px; height: 844px; transform-origin: 0 0; display: flex; flex-direction: column; padding: 56px 20px 32px; color: var(--ink); font-family: var(--ui); }
+.side .app { transform: scale(.5487); }
+.center .app { transform: scale(.6513); align-items: center; padding-bottom: 40px; }
+
+/* компоненты экранов (по lib/ui/widgets) */
+.a-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.a-head .t { flex: 1; font-size: 32px; font-weight: 900; letter-spacing: .5px; text-transform: uppercase; color: var(--ink-strong); }
+.a-head .total { font-family: var(--num); font-weight: 600; font-size: 28px; color: var(--ink-muted); }
+.circ { flex: none; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 999px; background: var(--surface); box-shadow: var(--rim-control); color: var(--ink); }
+.circ.ctl { background: var(--control-fill); }
+.circ svg { width: 20px; height: 20px; }
+.panel { border-radius: 26px; background: var(--surface); box-shadow: var(--rim-panel); padding: 4px 6px; margin-bottom: 18px; }
+.step { display: flex; align-items: center; justify-content: space-between; padding: 14px 10px; }
+.step + .step { border-top: 1px solid var(--hairline); }
+.step .btn { position: relative; width: 56px; height: 56px; border-radius: 999px; background: var(--control-fill); box-shadow: var(--rim-control); display: flex; align-items: center; justify-content: center; transition: background .15s, transform .15s; }
+.step .btn svg { width: 24px; height: 24px; }
+.step .btn.press { background: rgba(255,255,255,.22); transform: scale(.92); }
+.step .v { display: flex; flex-direction: column; align-items: center; }
+.step .v b { font-family: var(--num); font-weight: 600; font-size: 44px; line-height: 1; }
+.step .v span { font-size: 14px; font-weight: 700; color: var(--ink-muted); }
+.row { display: flex; align-items: center; gap: 14px; padding: 14px 12px; }
+.row + .row { border-top: 1px solid var(--hairline); }
+.row svg { width: 22px; height: 22px; color: var(--ink-muted); flex: none; }
+.row .l { flex: 1; display: flex; flex-direction: column; }
+.row .l b { font-size: 17px; font-weight: 700; }
+.row .l span { font-size: 14px; color: var(--ink-muted); }
+.row .on { font-size: 15px; font-weight: 800; color: var(--brand); }
+.cta { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 12px; height: 64px; border-radius: 999px; background: var(--brand); box-shadow: var(--rim-accent); color: var(--on-brand); font-size: 18px; font-weight: 900; letter-spacing: .5px; text-transform: uppercase; }
+.cta.sec { background: var(--surface); box-shadow: var(--rim-control); color: var(--ink); }
+.cta svg { width: 20px; height: 20px; }
+
+.run-top { align-self: stretch; display: flex; gap: 10px; }
+.run-top .sp { flex: 1; }
+.fill { flex: 1; }
+.r-label { font-size: 15px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--ph); }
+.r-time { font-family: var(--num); font-weight: 600; font-size: 150px; line-height: 1; color: var(--ph); display: inline-flex; }
+/* У Oswald нет tabular figures: каждая цифра в ячейке одной ширины, как mono_digits.dart. */
+.r-time i { font-style: normal; display: inline-block; width: .56em; text-align: center; }
+.r-time i.c { width: .26em; }
+.r-meta { margin-top: 6px; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); }
+.pips { display: flex; gap: 6px; margin-top: 18px; }
+.pips i { width: 12px; height: 6px; border-radius: 3px; background: var(--track); transition: width .3s, background .3s; }
+.pips i.done { background: var(--ph); opacity: .45; }
+.pips i.cur { width: 28px; background: var(--ph); }
+.upnext { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: var(--control-fill); box-shadow: var(--rim-control); margin-bottom: 22px; }
+.upnext small { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; color: var(--ink-muted); }
+.upnext b { font-size: 16px; color: var(--ink-strong); }
+.upnext svg { width: 16px; height: 16px; color: var(--next, var(--rest)); }
+.transport { align-self: stretch; display: flex; align-items: center; justify-content: space-around; }
+.transport .side-btn { width: 72px; height: 72px; border-radius: 999px; background: var(--control-fill); box-shadow: var(--rim-control); display: flex; align-items: center; justify-content: center; }
+.transport .side-btn svg { width: 26px; height: 26px; }
+.ring { position: relative; width: 112px; height: 112px; display: flex; align-items: center; justify-content: center; }
+.ring svg.r { position: absolute; inset: 0; transform: rotate(-90deg); }
+.ring .pause { width: 86px; height: 86px; border-radius: 999px; background: var(--ph); box-shadow: var(--rim-accent); display: flex; align-items: center; justify-content: center; transition: background .4s; }
+.ring .pause svg { width: 30px; height: 30px; }
+
+.res-meta { flex: 1; font-size: 15px; font-weight: 700; color: var(--ink-muted); }
+.hero-stat { display: flex; flex-direction: column; align-items: center; margin: 14px 0 18px; }
+.right .panel { margin-bottom: 12px; }
+.right .bars { height: 96px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.tile { padding: 14px 10px; border-radius: 20px; background: var(--surface); box-shadow: var(--rim-panel); display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tile b { font-family: var(--num); font-weight: 600; font-size: 30px; line-height: 1; color: var(--ink-strong); }
+.tile span { font-size: 13px; font-weight: 600; color: var(--ink-muted); }
+.health { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
+.health .hi { flex: none; display: flex; width: 40px; height: 40px; border-radius: 999px; background: var(--danger-soft, #3A1714); align-items: center; justify-content: center; }
+.health .hi svg { width: 20px; height: 20px; }
+.health .l { flex: 1; display: flex; flex-direction: column; }
+.health .l b { font-size: 16px; font-weight: 700; }
+.health .l span { font-size: 14px; color: var(--ink-muted); }
+.health .undo { font-size: 15px; font-weight: 800; color: var(--brand); }
+.hero-stat .n { display: flex; align-items: baseline; gap: 12px; }
+.hero-stat .n b { font-family: var(--num); font-weight: 600; font-size: 120px; line-height: .9; color: var(--brand); min-width: 1.1em; text-align: right; }
+.hero-stat .n span { font-family: var(--num); font-weight: 600; font-size: 40px; color: var(--brand); text-transform: uppercase; }
+.hero-stat small { margin-top: 10px; font-size: 15px; font-weight: 600; color: var(--ink-soft); }
+.pace { padding: 16px; }
+.pace .h { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+.pace .h span { color: var(--ink-muted); font-weight: 600; }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
+.bars i { flex: 1; border-radius: 4px; background: var(--ink-muted); height: 0; transition: height .35s ease-out, background .3s; }
+.bars i.best { background: var(--brand); }
+.bars i.worst { background: var(--prepare); }
+.two { display: flex; gap: 12px; margin-top: auto; }
+.two .cta { flex: 1; }
+.two .cta.main { flex: 1.5; }
+
+/* Темы веера: те же токены, что в приложении (tokens.css дизайн-системы). */
+.fan[data-theme="classic-light"] { --ground: #F3F5F7; --surface: #FFFFFF; --control-fill: rgba(20,25,32,.05); --track: #CFD6DC; --hairline: rgba(20,25,32,.08);
+  --ink: #1F242B; --ink-strong: #14181E; --ink-soft: #3E4651; --ink-muted: #5E6775; --brand: #12A150; --on-brand: #FFFFFF; --rest: #0E86C4; --prepare: #C9780B;
+  --rim-panel: inset 0 1px 0 rgba(20,25,32,.08); --rim-control: inset 0 1px 0 rgba(20,25,32,.10); --rim-accent: inset 0 1px 0 rgba(255,255,255,.30); }
+.fan[data-theme="pink-dark"] { --ground: #241825; --surface: #2E2031; --track: #4C3850; --ink: #F6EDF6; --ink-soft: #D8C6DA; --ink-muted: #B29AB5;
+  --brand: #FF6FB5; --on-brand: #3A0720; --rest: #B98CFF; --prepare: #FFB84D; }
+.fan[data-theme="pink-light"] { --ground: #FBEFF5; --surface: #FFFFFF; --control-fill: rgba(125,41,87,.06); --track: #E7CEDD; --hairline: rgba(125,41,87,.12);
+  --ink: #2E1F29; --ink-strong: #241820; --ink-soft: #4A3745; --ink-muted: #6E5568; --brand: #C63D86; --on-brand: #FFFFFF; --rest: #7E57D6; --prepare: #C9780B;
+  --rim-panel: inset 0 1px 0 rgba(125,41,87,.12); --rim-control: inset 0 1px 0 rgba(125,41,87,.16); --rim-accent: inset 0 1px 0 rgba(255,255,255,.30); }
+.fan .screen, .fan .panel, .fan .tile, .fan .circ, .fan .cta { transition: background-color .35s, color .35s; }
+.ring .pause { color: var(--on-brand); }
+.theme-sw { position: absolute; z-index: 3; left: 50%; bottom: 0; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 16px;
+  border-radius: 999px; background: rgba(39,45,54,.92); box-shadow: var(--rim-control), 0 12px 30px rgba(0,0,0,.35); white-space: nowrap; }
+.theme-sw span { font-size: 13px; font-weight: 800; color: #C7CED6; margin-right: 2px; }
+.theme-sw button { width: 30px; height: 30px; padding: 0; border: 0; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg, var(--a) 0 50%, var(--b) 50% 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); transition: transform .15s; }
+.theme-sw button:hover { transform: scale(1.1); }
+.theme-sw button[aria-checked="true"] { box-shadow: 0 0 0 2px #1F242B, 0 0 0 4px #EEF1F4; }
+
+/* ---------- полоса платформ ---------- */
+.platforms { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 28px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); margin: 0; list-style: none; font-size: 15px; font-weight: 700; color: var(--ink-muted); }
+
+/* ---------- фичи ---------- */
+.features { padding: 88px 0 40px; }
+h2 { margin: 0; font-weight: 900; color: var(--ink-strong); }
+.features > h2 { font-size: 48px; line-height: 1.05; margin-bottom: 40px; }
+.feat { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; padding: 44px 0; border-top: 1px solid var(--hairline); scroll-margin-top: 20px; }
+.feat:last-child { border-bottom: 1px solid var(--hairline); }
+.feat .no { flex: 0 0 110px; font-family: var(--num); font-weight: 600; font-size: 88px; line-height: 1; }
+.feat .txt { flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.feat h3 { margin: 0; font-size: 30px; font-weight: 800; color: var(--ink-strong); }
+.feat p { margin: 0; font-size: 18px; line-height: 1.5; color: var(--ink-soft); }
+.feat .demo { flex: 1 1 440px; min-width: 0; display: flex; justify-content: center; }
+.card { width: 100%; padding: 22px; border-radius: 26px; background: var(--surface); box-shadow: var(--rim-panel); display: flex; flex-direction: column; gap: 16px; }
+.c-work { color: var(--brand); } .c-rest { color: var(--rest); } .c-prep { color: var(--prepare); }
+
+/* 01 голос */
+.voice { display: flex; align-items: center; gap: 14px; }
+.voice .play { flex: none; width: 52px; height: 52px; border: 0; border-radius: 999px; background: var(--brand); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.voice .play svg { width: 20px; height: 20px; }
+.wave { flex: 1; display: flex; align-items: center; gap: 3px; height: 44px; }
+.wave i { width: 4px; border-radius: 2px; background: var(--track); }
+.wave i.g { background: var(--brand); } .wave i.m { background: var(--ink-muted); }
+.voice .dur { font-family: var(--num); font-size: 18px; color: var(--ink-muted); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chips span { padding: 8px 12px; border-radius: 999px; font-weight: 800; font-size: 14px; background: var(--ground-run); color: var(--brand); }
+.chips span.r { background: var(--rest-soft); color: var(--rest); }
+.kv { display: flex; flex-direction: column; border-top: 1px solid var(--hairline); }
+.kv div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; font-size: 15px; }
+.kv div + div { border-top: 1px solid var(--hairline); }
+.kv span { color: var(--ink-soft); } .kv b { color: var(--ink-strong); text-align: right; }
+
+/* 02 комплексы */
+.avatars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; text-align: center; margin: 0; padding: 0; list-style: none; }
+.avatars li { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.avatars .ini { display: flex; width: 60px; height: 60px; border-radius: 999px; align-items: center; justify-content: center; font-weight: 900; font-size: 20px; background: var(--brand); color: var(--on-brand); }
+.avatars .ini.bb { background: var(--rest); color: #0E2030; }
+.avatars .ini.wk { box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--prepare); }
+.avatars b { font-size: 15px; } .avatars span { font-size: 13px; color: var(--ink-muted); }
+.pb { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: var(--prepare-soft); }
+.pb svg { width: 26px; height: 26px; flex: none; }
+.pb div { flex: 1; display: flex; flex-direction: column; }
+.pb small { font-size: 13px; font-weight: 800; letter-spacing: 1.5px; color: var(--prepare); text-transform: uppercase; }
+.pb span { font-size: 15px; color: var(--ink-soft); }
+.pb b { font-family: var(--num); font-weight: 600; font-size: 34px; color: var(--prepare); white-space: nowrap; }
+.pb b small { font-size: 18px; letter-spacing: 0; }
+
+/* 03 музыка */
+.player { display: flex; align-items: center; gap: 14px; }
+.cover { flex: none; width: 56px; height: 56px; border-radius: 12px; background: linear-gradient(135deg, var(--rest), var(--rest-soft)); display: flex; align-items: center; justify-content: center; }
+.cover svg { width: 26px; height: 26px; }
+.player div { flex: 1; display: flex; flex-direction: column; }
+.player b { font-size: 16px; color: var(--ink-strong); } .player span { font-size: 14px; color: var(--ink-muted); }
+.vol { width: 100%; height: auto; }
+
+/* 04 экран блокировки: iPhone (Live Activity) и Android (уведомление WorkoutService).
+   Размеры — из реальных pt/dp, умноженных на масштаб корпуса: экран 224 px ≈ 393 pt (iPhone)
+   ≈ 412 dp (Pixel), --u ≈ 0.57 px на pt. */
+.locks { width: 100%; max-width: 520px; display: flex; justify-content: center; align-items: center; padding: 24px 0; --u: 0.57px; }
+/* Не в ряд, а свободно: телефоны наклонены друг к другу верхушками и сходятся только там,
+   низы расходятся — Live Activity и уведомление видны целиком. Android чуть выше и впереди. */
+.locks .device.ios { z-index: 1; transform: rotate(7deg) translateY(26px); }
+.locks .device.droid { z-index: 2; margin-left: -34px; transform: rotate(-6deg) translateY(-18px) scale(.96); }
+/* Корпус: тонкая металлическая рамка, чёрная кромка экрана, боковые кнопки. */
+.device { position: relative; flex: 0 1 236px; aspect-ratio: 9 / 19.5; padding: 6px; border-radius: 42px; background: #0B0D10;
+  box-shadow: 0 0 0 2px #3A4049, 0 0 0 3px #1A1D22, 0 26px 50px rgba(0,0,0,.5); }
+.device::before, .device::after { content: ""; position: absolute; width: 3px; border-radius: 2px; background: #3A4049; }
+.device.ios::before { left: -5px; top: 104px; height: 38px; box-shadow: 0 52px 0 #3A4049; }
+.device.ios::after { right: -5px; top: 132px; height: 62px; }
+.device.droid { border-radius: 36px; }
+.device.droid::before { right: -5px; top: 96px; height: 58px; }
+.device.droid::after { right: -5px; top: 170px; height: 34px; }
+.lock { position: relative; width: 100%; height: 100%; border-radius: 36px; background-color: #141920; background-size: cover; background-position: center 30%;
+  padding: calc(56 * var(--u)) calc(14 * var(--u)) 0; display: flex; flex-direction: column; align-items: center; overflow: hidden;
+  font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif; color: #fff; }
+/* Dynamic Island 126×37 pt, сверху 11 pt. */
+.island { position: absolute; left: 50%; top: calc(11 * var(--u)); width: calc(126 * var(--u)); height: calc(37 * var(--u)); transform: translateX(-50%); border-radius: 999px; background: #000; }
+/* Камера-точка Pixel ≈ 22 dp. */
+.punch { position: absolute; left: 50%; top: calc(16 * var(--u)); width: calc(22 * var(--u)); height: calc(22 * var(--u)); transform: translateX(-50%); border-radius: 999px; background: #000; box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+.home { position: absolute; left: 50%; bottom: calc(8 * var(--u)); width: calc(134 * var(--u)); height: calc(5 * var(--u)); transform: translateX(-50%); border-radius: 3px; background: rgba(255,255,255,.8); }
+.lk { color: rgba(255,255,255,.92); line-height: 0; }
+.lk svg { width: calc(15 * var(--u)); height: auto; }
+/* iOS: дата 20 pt semibold, часы ~104 pt. */
+.ios .lock .d { margin-top: calc(6 * var(--u)); font-size: calc(20 * var(--u)); font-weight: 600; color: rgba(255,255,255,.92); text-shadow: 0 1px 6px rgba(0,0,0,.35); }
+.ios .lock .clock { font-size: calc(104 * var(--u)); font-weight: 700; line-height: .95; letter-spacing: calc(-2 * var(--u)); color: rgba(255,255,255,.95); text-shadow: 0 2px 12px rgba(0,0,0,.3); }
+/* Live Activity: поля 18×14 pt, радиус ~24 pt, отступ от краёв 14 pt, над полоской «домой». */
+.la { width: 100%; margin: auto 0 calc(44 * var(--u)); padding: calc(14 * var(--u)) calc(18 * var(--u)); border-radius: calc(24 * var(--u)); background: rgba(0,0,0,.9);
+  display: flex; flex-direction: column; gap: calc(6 * var(--u)); }
+.la-h { display: flex; align-items: center; gap: calc(6 * var(--u)); font-size: calc(11 * var(--u)); }
+.la-h .bf { display: flex; width: calc(16 * var(--u)); height: calc(16 * var(--u)); border-radius: calc(5 * var(--u)); background: var(--brand); color: #1F242B; align-items: center; justify-content: center; font-size: calc(8.5 * var(--u)); font-weight: 800; }
+.la-h b { color: var(--brand); font-weight: 700; }
+.la-h span:last-child { margin-left: auto; color: rgba(235,235,245,.6); font-weight: 500; }
+.la-t { display: flex; align-items: baseline; gap: calc(6 * var(--u)); }
+.la-t b { font-size: calc(34 * var(--u)); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.la-t span { font-size: calc(15 * var(--u)); font-weight: 600; color: rgba(235,235,245,.6); font-variant-numeric: tabular-nums; }
+.la .bar { height: calc(4 * var(--u)); border-radius: 99px; background: rgba(120,120,128,.36); overflow: hidden; }
+.la .bar i { display: block; width: 28%; height: 100%; border-radius: 99px; background: var(--brand); }
+/* Android: часы слева тонким шрифтом, уведомление на всю ширину с полями 8 dp. */
+.droid .lock { align-items: flex-start; padding: calc(64 * var(--u)) calc(8 * var(--u)) 0; border-radius: 30px; font-family: Roboto, "Google Sans", system-ui, sans-serif; }
+.droid .lock .clock { padding-left: calc(16 * var(--u)); font-size: calc(92 * var(--u)); font-weight: 300; line-height: 1; color: rgba(255,255,255,.95); }
+.droid .lock .d { padding-left: calc(18 * var(--u)); margin-top: calc(4 * var(--u)); font-size: calc(16 * var(--u)); font-weight: 500; color: rgba(255,255,255,.9); }
+/* Уведомление Material 3: радиус 24 dp, поля 16 dp, шапка 12 sp, заголовок 14 sp, текст 14 sp, кнопки 14 sp. */
+.notif { width: 100%; margin: auto 0 calc(40 * var(--u)); padding: calc(16 * var(--u)); border-radius: calc(24 * var(--u)); background: rgba(32,35,40,.94);
+  display: flex; flex-direction: column; gap: calc(2 * var(--u)); color: #E3E3E6; }
+.notif .nh { display: flex; align-items: center; gap: calc(6 * var(--u)); font-size: calc(12 * var(--u)); color: #C4C7CC; }
+.notif .nh i { font-style: normal; opacity: .7; }
+.notif .nh b { font-weight: 400; font-variant-numeric: tabular-nums; }
+.notif .nh svg { width: calc(14 * var(--u)); height: auto; margin-left: auto; }
+.notif .ic { display: flex; width: calc(18 * var(--u)); height: calc(18 * var(--u)); border-radius: 999px; background: var(--brand); color: var(--on-brand); align-items: center; justify-content: center; font-size: calc(10 * var(--u)); font-weight: 900; font-family: var(--ui); }
+.notif .nt { margin-top: calc(8 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 500; }
+.notif .nx { font-size: calc(14 * var(--u)); color: #C4C7CC; }
+.notif .na { display: flex; gap: calc(24 * var(--u)); margin-top: calc(12 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 500; color: var(--brand); }
+
+/* 05 часы и TV */
+.devices { display: flex; align-items: flex-end; justify-content: center; gap: 22px; flex-wrap: wrap; }
+.watch { display: flex; flex-direction: column; align-items: center; }
+.watch .band { width: 56px; height: 34px; background: #2A3038; border-radius: 10px 10px 0 0; }
+.watch .band.b { border-radius: 0 0 10px 10px; }
+.watch .body { width: 170px; height: 204px; border-radius: 46px; background: #0F1318; padding: 10px; box-shadow: inset 0 0 0 2px #3A424D; }
+.watch .face { width: 100%; height: 100%; border-radius: 36px; background: var(--ground-run); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.watch .face small { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--brand); }
+.watch .face b { font-family: var(--num); font-weight: 600; font-size: 56px; line-height: 1; color: var(--brand); }
+.watch .face span { display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 800; color: var(--danger); }
+.tv { display: flex; flex-direction: column; align-items: center; }
+.tv .scr { width: 300px; height: 176px; border-radius: 10px; background: #0F1318; padding: 7px; }
+.tv .in { width: 100%; height: 100%; border-radius: 4px; background: var(--rest-soft); display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
+.tv .in small { display: block; font-size: 11px; font-weight: 800; letter-spacing: 2px; color: var(--rest); }
+.tv .in b { font-family: var(--num); font-weight: 600; font-size: 64px; line-height: 1; color: var(--rest); }
+.tv .nx { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.tv .nx small { color: var(--ink-muted); letter-spacing: 1px; }
+.tv .nx b { font-family: var(--ui); font-size: 14px; color: var(--ink); }
+.tv .nx span { font-family: var(--num); font-size: 22px; color: var(--ink-soft); }
+.tv .stand { width: 80px; height: 10px; background: #2A3038; border-radius: 0 0 6px 6px; }
+
+/* 06 видео */
+.film { position: relative; width: 100%; max-width: 460px; height: 380px; border-radius: 26px; overflow: hidden; background: var(--ground-deep); }
+.film > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 35%; filter: blur(2px) brightness(.62); transform: scale(1.06); }
+.film .vign { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,24,30,0) 40%, rgba(20,24,30,.55) 100%); }
+.film .ph { position: absolute; right: 26px; top: 26px; width: 178px; height: 372px; transform: rotate(-5deg); border-radius: 32px; background: #0F1318; padding: 7px; box-shadow: 0 30px 70px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.1); }
+.film .ph-in { position: relative; width: 100%; height: 100%; border-radius: 26px; overflow: hidden; }
+.film .ph-in img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 40%; }
+.rec { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); display: flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 999px; background: rgba(0,0,0,.55); font-size: 11px; font-weight: 800; color: #fff; }
+.rec i { width: 7px; height: 7px; border-radius: 999px; background: var(--danger); }
+/* Плашка как VideoOverlayPlate (lib/ui/widgets/video_overlay_plate.dart) в масштабе кадра. */
+.plate { position: absolute; left: 9px; bottom: 16px; display: flex; height: 44px; border-radius: 5px; overflow: hidden; background: rgba(20,24,30,.78); box-shadow: inset 0 0 0 .5px rgba(255,255,255,.10); }
+.plate .stripe { width: 10px; background: var(--brand); display: flex; align-items: center; justify-content: center; }
+.plate .stripe span { transform: rotate(-90deg); font-size: 6px; font-weight: 900; letter-spacing: .6px; color: var(--on-brand); white-space: nowrap; }
+.plate .body { display: flex; flex-direction: column; justify-content: space-between; padding: 4px 7px 4px 5px; text-shadow: 0 1px 3px rgba(0,0,0,.7); }
+.plate .s { display: flex; gap: 9px; font-size: 7px; font-weight: 900; letter-spacing: .7px; line-height: 1; }
+.plate .s span:last-child { color: rgba(255,255,255,.86); }
+.plate .t { font-size: 20px; font-weight: 700; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+.plate .m { font-size: 8px; font-weight: 700; line-height: 1; color: rgba(255,255,255,.92); }
+
+/* ---------- финальный призыв ---------- */
+.final { position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 48px;
+  padding: 64px 64px; margin: 56px 0; border-radius: 36px; background: radial-gradient(120% 140% at 0% 0%, rgba(75,222,127,.16), rgba(75,222,127,0) 55%), var(--surface); box-shadow: var(--rim-panel); }
+.final .copy { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.final h2 { font-size: 48px; line-height: 1.04; }
+.final h2 span { color: var(--brand); }
+.final p { margin: 0; font-size: 18px; line-height: 1.5; color: var(--ink-soft); max-width: 460px; }
+.final .more { font-size: 16px; font-weight: 700; text-decoration: none; }
+.scan { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 24px 28px; border-radius: 28px; background: var(--ground); box-shadow: var(--rim-panel); }
+.app-id { display: flex; align-items: center; gap: 12px; align-self: stretch; }
+.app-id .icon { flex: none; width: 48px; height: 48px; border-radius: 12px; background: #1F242B; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: .95; font-weight: 900; font-size: 13px; letter-spacing: .3px; }
+.app-id .icon b:first-child { color: #fff; } .app-id .icon b:last-child { color: var(--brand); }
+.app-id div { display: flex; flex-direction: column; }
+.app-id div b { font-size: 17px; color: var(--ink-strong); } .app-id div span { font-size: 13px; color: var(--ink-muted); }
+.scan .qr { width: 168px; height: 168px; border-radius: 16px; background: #fff; padding: 10px; image-rendering: pixelated; }
+.scan .hint { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--ink-soft); }
+.scan .hint svg { color: var(--brand); }
+
+footer { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; padding: 32px 0 48px; border-top: 1px solid var(--hairline); font-size: 14px; }
+footer .mark { font-size: 18px; }
+footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+footer nav a { color: var(--ink-muted); }
+
+/* ---------- телефон и узкие экраны ---------- */
+@media (max-width: 900px) {
+  .nav a.anchor { display: none; }
+  .hero { padding-top: 16px; }
+  .fan { flex-basis: 100%; height: 600px; max-width: 520px; margin: 0 auto; }
+  .phone.left { left: -10px; } .phone.right { right: -10px; }
+  .qr-card { display: none; }
+  .features > h2 { font-size: 36px; }
+  /* Текст идёт поверх всей полосы фото — притемняем её ровно. */
+  .hero-bg .shade { background: rgba(31,36,43,.78); }
+}
+@media (max-width: 560px) {
+  .wrap { padding: 0 16px; }
+  /* Шапка в одну строку: слоган и подпись языка прячем, остаются глобус и Try online. */
+  .top { flex-wrap: nowrap; padding: 18px 0; }
+  .top .tagline, .lang .ll { display: none; }
+  .mark { font-size: 22px; }
+  .nav { gap: 4px; flex-wrap: nowrap; }
+  .pill { height: 40px; padding: 0 14px; }
+  .lang ul { right: -60px; }
+  .lang-hint { font-size: 14px; }
+  .hero { gap: 28px; padding: 8px 0 40px; }
+  .hero-copy { gap: 20px; }
+  h1 { font-size: 40px; }
+  .lead { font-size: 17px; }
+  /* Бейджи сторов в ряд и пониже. */
+  .stores { gap: 10px; flex-wrap: nowrap; }
+  .badge img { height: 44px; }
+  .fan { height: 650px; transform: scale(.86); transform-origin: top center; margin-bottom: -90px; }
+  .phone.left, .phone.right { display: none; }
+  .glow { width: 340px; height: 340px; margin: -170px 0 0 -170px; }
+  /* Платформы — плашками в две колонки, без точек-разделителей. */
+  .platforms { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 20px 0; font-size: 13px; }
+  .platforms li[aria-hidden] { display: none; }
+  .platforms li { padding: 10px 12px; border-radius: 14px; background: var(--surface); text-align: center; }
+  .features { padding: 56px 0 24px; }
+  .features > h2 { font-size: 30px; margin-bottom: 16px; }
+  .feat { gap: 14px; padding: 32px 0; }
+  .feat .no { font-size: 44px; flex-basis: 100%; }
+  .feat h3 { font-size: 24px; }
+  .feat p { font-size: 16px; }
+  .card { padding: 18px; }
+  .avatars .ini { width: 52px; height: 52px; font-size: 18px; }
+  /* Экраны блокировки: корпуса меньше, масштаб pt пересчитан под них. */
+  .locks { --u: 0.40px; padding: 12px 0 28px; }
+  .device { flex: 0 1 168px; border-radius: 30px; padding: 5px; }
+  .device.droid { border-radius: 26px; }
+  .lock { border-radius: 26px; } .droid .lock { border-radius: 22px; }
+  .locks .device.droid { margin-left: -26px; }
+  .device.ios::before { top: 74px; height: 26px; box-shadow: 0 36px 0 #3A4049; }
+  .device.ios::after { top: 94px; height: 44px; }
+  .device.droid::before { top: 68px; height: 40px; } .device.droid::after { top: 120px; height: 24px; }
+  .devices { gap: 16px; } .devices .tv { display: none; }
+  .film { height: 340px; } .film .ph { right: 12px; width: 160px; height: 330px; }
+  .final { padding: 36px 18px; margin: 32px 0; border-radius: 28px; }
+  .final h2 { font-size: 32px; }
+  .final p { font-size: 16px; }
+  .scan { display: none; }
+  footer { padding-bottom: 96px; }
+  footer nav { gap: 14px; }
+}
+/* Липкая кнопка стора на телефоне. */
+.mbar { position: fixed; z-index: 10; left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); height: 56px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--brand); color: var(--on-brand) !important; text-decoration: none;
+  font-size: 17px; font-weight: 900; letter-spacing: .3px; box-shadow: var(--rim-accent), 0 12px 30px rgba(0,0,0,.45); }
+.mbar[hidden] { display: none; }
+.mbar svg { width: 20px; height: 20px; }
+@media (min-width: 561px) { .mbar { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

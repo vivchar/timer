@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Шаблон лендинга. Собирается tools/web-site/build_landing.py в build/web/index.html
+       и build/web/ru/index.html; строки — tools/web-site/strings.json. Спека —
+       docs/superpowers/specs/2026-11-20-landing-design.md. -->
+  <script>
+    // Установленная раньше веб-версия (PWA) открывает корень: отправляем её в приложение.
+    try { if (matchMedia('(display-mode: standalone)').matches) location.replace('/online/'); } catch (e) {}
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fitmer — Tabata &amp; Interval Timer That Counts Out Loud</title>
+  <meta name="description" content="Interval timer for Tabata, EMOM, AMRAP, For Time and custom intervals. A voice counts your rounds, music keeps playing. iPhone, Android, Apple Watch, Wear OS.">
+  <link rel="canonical" href="https://fitmer.web.app/">
+  <link rel="alternate" hreflang="en" href="https://fitmer.web.app/">
+  <link rel="alternate" hreflang="ru" href="https://fitmer.web.app/ru/">
+  <link rel="alternate" hreflang="x-default" href="https://fitmer.web.app/">
+  <meta name="theme-color" content="#1F242B">
+  <meta name="color-scheme" content="dark">
+  <meta name="apple-itunes-app" content="app-id=1509055701">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fitmer">
+  <meta property="og:url" content="https://fitmer.web.app/">
+  <meta property="og:title" content="Fitmer — Tabata &amp; Interval Timer That Counts Out Loud">
+  <meta property="og:description" content="Interval timer for Tabata, EMOM, AMRAP, For Time and custom intervals. A voice counts your rounds, music keeps playing. iPhone, Android, Apple Watch, Wear OS.">
+  <meta property="og:image" content="https://fitmer.web.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fitmer.web.app/og-image.png">
+  <link rel="icon" href="/favicon.png">
+  <link rel="preload" href="/landing/fonts/Archivo.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/landing/fonts/Oswald.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/landing/landing.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Fitmer",
+    "alternateName": "Fitmer: HIIT Interval Timer",
+    "applicationCategory": "HealthApplication",
+    "applicationSubCategory": "Interval Timer",
+    "operatingSystem": "iOS, Android, watchOS, Wear OS, Android TV",
+    "inLanguage": "en",
+    "url": "https://fitmer.web.app/",
+    "description": "Interval timer for Tabata, EMOM, AMRAP, For Time and custom intervals. A voice counts your rounds, music keeps playing. iPhone, Android, Apple Watch, Wear OS.",
+    "image": "https://fitmer.web.app/og-image.png",
+    "installUrl": ["https://apps.apple.com/app/id1509055701", "https://play.google.com/store/apps/details?id=com.vivchar.fitmer"],
+    "sameAs": ["https://apps.apple.com/app/id1509055701", "https://play.google.com/store/apps/details?id=com.vivchar.fitmer", "https://www.youtube.com/@fitmerapp", "https://www.instagram.com/fitmerapp/"]
+  }
+  </script>
+  <script>window.FITMER_T = {"p_work": "Work", "p_rest": "Rest", "p_prepare": "Get ready", "r_best": "New best · was 12", "r_counting": "Counting rounds…", "mbar_android": "Get it on Google Play"};</script>
+  <script src="/landing/landing.js" defer></script>
+</head>
+<body data-lang="en" data-ch="site">
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="/" aria-label="Fitmer, made for athletes"><span class="mark">FIT<span>MER</span></span><span class="tagline">Made for athletes</span></a>
+  <nav class="nav" aria-label="Main">
+    <a class="anchor" href="#features">Features</a>
+    <a class="anchor" href="#workouts">Workouts</a>
+    <a class="anchor" href="#devices">Watch &amp; TV</a>
+    <a class="anchor" href="#video">Video</a>
+    <details class="lang" id="lang">
+      <summary aria-label="Language: English"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span class="ll">English</span><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <ul>
+        <li><a href="/" hreflang="en" lang="en">English</a></li>
+        <li><a href="/ru/" hreflang="ru" lang="ru">Русский</a></li>
+      </ul>
+    </details>
+    <a class="pill" href="/online/" data-gc="online-top"><svg width="14" height="14" viewBox="0 0 24 24" fill="#4BDE7F" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>Try online</a>
+  </nav>
+</header>
+<a class="lang-hint" id="lang-hint" href="/ru/" hreflang="ru" lang="ru">Есть русская версия →</a>
+
+<main>
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="strip">
+      <img src="/landing/img/towel-shaker.webp" alt="" width="560" height="840" style="object-position: 50% 20%">
+      <img src="/landing/img/barbell-back-squat.webp" alt="" width="560" height="840" style="object-position: 50% 25%">
+      <img src="/landing/img/mountain-climber-02.webp" alt="" width="560" height="840" style="object-position: 30% 60%">
+      <img src="/landing/img/kettlebell-squat.webp" alt="" width="560" height="840" style="object-position: 50% 30%">
+      <img src="/landing/img/standing-phone.webp" alt="" width="560" height="840" style="object-position: 50% 20%">
+    </div>
+    <div class="tint"></div><div class="dots"></div><div class="shade"></div>
+  </div>
+
+  <div class="hero-copy">
+    <span class="eyebrow">Interval timer · iPhone &amp; Android</span>
+    <h1>Train hard.<br><span>Fitmer keeps count.</span></h1>
+    <p class="lead">Tabata, EMOM, AMRAP, For Time and custom intervals, counted out loud so your eyes stay on the workout.</p>
+    <div class="stores">
+      <a class="badge" href="https://apps.apple.com/app/apple-store/id1509055701?pt=121440697&amp;mt=8&amp;ct=site" data-gc="store-ios"><img src="/landing/badges/app-store-en.svg" alt="Download Fitmer on the App Store" width="150" height="50"></a>
+      <a class="badge" href="https://play.google.com/store/apps/details?id=com.vivchar.fitmer&amp;referrer=utm_source%3Dsite%26utm_medium%3Dweb%26utm_campaign%3Dlanding" data-gc="store-android"><img src="/landing/badges/google-play-en.png" alt="Get Fitmer on Google Play" width="168" height="50"></a>
+    </div>
+    <div class="qr-card">
+      <img src="/landing/qr-site.svg" width="96" height="96" alt="QR code: opens Fitmer in the App Store or Google Play on your phone">
+      <div><b>On a computer?</b><span>Scan with your phone camera, it opens the right store.</span></div>
+    </div>
+  </div>
+
+  <div class="fan" id="fan" data-theme="classic-dark">
+    <div class="glow" id="glow"></div>
+    <!-- Переключатель тем: палитры Classic и Pink × тёмная и светлая (lib/ui/theme/fitmer_colors.dart). -->
+    <div class="theme-sw" role="radiogroup" aria-label="Theme">
+      <span>Theme</span>
+      <button type="button" role="radio" aria-checked="true" data-theme="classic-dark" aria-label="Classic · Dark" style="--a:#1F242B;--b:#4BDE7F"></button>
+      <button type="button" role="radio" aria-checked="false" data-theme="classic-light" aria-label="Classic · Light" style="--a:#F3F5F7;--b:#12A150"></button>
+      <button type="button" role="radio" aria-checked="false" data-theme="pink-dark" aria-label="Pink · Dark" style="--a:#241825;--b:#FF6FB5"></button>
+      <button type="button" role="radio" aria-checked="false" data-theme="pink-light" aria-label="Pink · Light" style="--a:#FBEFF5;--b:#C63D86"></button>
+    </div>
+
+    <div class="phone side left" aria-hidden="true"><div class="screen"><span class="isl"></span><div class="app">
+      <div class="a-head"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span><span class="t">Tabata</span><span class="total" id="s-total">4:00</span></div>
+      <div class="panel">
+        <div class="step"><span class="btn" id="s-minus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 12h12"/></svg></span><span class="v"><b class="c-work" id="s-work">0:20</b><span>Work</span></span><span class="btn" id="s-plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 12h12M12 6v12"/></svg></span></div>
+        <div class="step"><span class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 12h12"/></svg></span><span class="v"><b class="c-rest">0:10</b><span>Rest</span></span><span class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 12h12M12 6v12"/></svg></span></div>
+        <div class="step"><span class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 12h12"/></svg></span><span class="v"><b>8</b><span>Rounds</span></span><span class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 12h12M12 6v12"/></svg></span></div>
+      </div>
+      <div class="panel">
+        <div class="row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><span class="l"><b>Sound</b><span>Voice, ticks and alerts</span></span><span class="on">On</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="3" width="10" height="18" rx="2"/></svg><span class="l"><b>Vibrate</b><span>Haptic each round</span></span><span class="on">On</span></div>
+      </div>
+      <span class="cta"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>Start workout</span>
+    </div></div></div>
+
+    <div class="phone side right" aria-hidden="true"><div class="screen"><span class="isl"></span><div class="app">
+      <div class="a-head"><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span class="res-meta">Cindy · AMRAP 20:00 · Today</span></div>
+      <div class="hero-stat"><div class="n"><b id="r-num">14</b><span>Rounds</span></div><small id="r-cap">New best · was 12</small></div>
+      <div class="panel pace"><div class="h">Pace by round<span>avg 1:25</span></div><div class="bars" id="r-bars"></div></div>
+      <!-- Как PaceBody (lib/features/results/view/body_pace.dart): три плитки под графиком. -->
+      <div class="tiles"><div class="tile"><b class="c-work">1:18</b><span>best round</span></div><div class="tile"><b class="c-prep">1:34</b><span>worst round</span></div><div class="tile"><b>0:16</b><span>spread</span></div></div>
+      <!-- Как HealthStatusCard: тренировка записана в Здоровье, калории, «Отменить». -->
+      <div class="panel health"><span class="hi"><svg viewBox="0 0 24 24" fill="#FF5247"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg></span><span class="l"><b>Saved to Apple Health</b><span>~186 kcal</span></span><span class="undo">Undo</span></div>
+      <div class="two"><span class="cta sec">Done</span><span class="cta main"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 13v6h14v-6"/></svg>Share</span></div>
+    </div></div></div>
+
+    <div class="phone center" aria-hidden="true"><div class="screen" id="run-screen"><span class="isl"></span><div class="app" id="run-app">
+      <div class="run-top">
+        <span class="circ ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+        <span class="circ ctl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></span>
+        <span class="sp"></span>
+        <span class="circ ctl"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></span>
+      </div>
+      <div class="fill"></div>
+      <span class="r-label" id="r-label">Work</span>
+      <span class="r-time" id="r-time"><i>0</i><i class="c">:</i><i>1</i><i>2</i></span>
+      <span class="r-meta">Tabata · <span id="r-left">2:52</span> left</span>
+      <div class="pips" id="r-pips"></div>
+      <div class="fill"></div>
+      <span class="upnext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg><small>UP NEXT</small><b id="r-next">Rest · 0:10</b></span>
+      <div class="transport">
+        <span class="side-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 11-2.3-5.7M20 4v5h-5"/></svg></span>
+        <span class="ring"><svg class="r" width="112" height="112" viewBox="0 0 112 112"><circle cx="56" cy="56" r="52" fill="none" stroke="var(--track)" stroke-width="4"/><circle id="r-ring" cx="56" cy="56" r="52" fill="none" stroke="var(--ph)" stroke-width="4" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="200"/></svg><span class="pause"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></span></span>
+        <span class="side-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 5l10 7-10 7zM17 5h3v14h-3z"/></svg></span>
+      </div>
+    </div></div></div>
+  </div>
+</section>
+
+<ul class="platforms">
+  <li>iPhone &amp; Android</li><li aria-hidden="true">·</li><li>Apple Watch &amp; Wear OS</li><li aria-hidden="true">·</li><li>Android TV</li><li aria-hidden="true">·</li><li>Apple Health &amp; Health Connect</li><li aria-hidden="true">·</li><li>18 languages</li>
+</ul>
+
+<section class="features" id="features">
+  <h2>Six reasons to switch</h2>
+
+  <article class="feat">
+    <span class="no c-work" aria-hidden="true">01</span>
+    <div class="txt"><h3>Counts out loud</h3><p>A voice calls work, rest and the last seconds. Pick a voice pack, or a sound for each event.</p></div>
+    <div class="demo"><div class="card">
+      <div class="voice">
+        <button class="play" type="button" id="voice-play" aria-label="Play a voice sample"><svg viewBox="0 0 24 24" fill="#0E2417" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></button>
+        <div class="wave" aria-hidden="true"><i class="g" style="height:10px"></i><i class="g" style="height:22px"></i><i class="g" style="height:34px"></i><i class="g" style="height:18px"></i><i class="g" style="height:8px"></i><i style="height:4px"></i><i style="height:4px"></i><i class="g" style="height:26px"></i><i class="g" style="height:40px"></i><i class="g" style="height:20px"></i><i style="height:4px"></i><i style="height:4px"></i><i class="m" style="height:16px"></i><i class="m" style="height:30px"></i><i class="m" style="height:12px"></i><i style="height:4px"></i><i style="height:4px"></i><i class="m" style="height:24px"></i><i class="m" style="height:36px"></i><i class="m" style="height:28px"></i><i class="m" style="height:10px"></i></div>
+        <span class="dur">0:04</span>
+      </div>
+      <div class="chips"><span>“Three”</span><span>“Two”</span><span>“One”</span><span class="r">“Rest”</span></div>
+      <div class="kv"><div><span>Work starts</span><b>Voice · “Work”</b></div><div><span>Last 3 seconds</span><b>Voice countdown</b></div><div><span>Workout done</span><b>Gong</b></div></div>
+    </div></div>
+  </article>
+
+  <article class="feat" id="workouts">
+    <span class="no c-prep" aria-hidden="true">02</span>
+    <div class="txt"><h3>16 legendary workouts</h3><p>Cindy, Fran, Helen and 13 more, preset and ready. Tap a name and go. Your best score is saved.</p></div>
+    <div class="demo"><div class="card">
+      <ul class="avatars">
+        <li><span class="ini wk" aria-hidden="true">Ci</span><b>Cindy</b><span>20:00</span></li>
+        <li><span class="ini bb" aria-hidden="true">Fr</span><b>Fran</b><span>15:00</span></li>
+        <li><span class="ini bb" aria-hidden="true">He</span><b>Helen</b><span>25:00</span></li>
+        <li><span class="ini" aria-hidden="true">Ch</span><b>Chelsea</b><span>30 × 1:00</span></li>
+      </ul>
+      <div class="pb"><svg viewBox="0 0 24 24" fill="none" stroke="#FFB020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"/><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg><div><small>Cindy · personal best</small><span>5 pull-ups · 10 push-ups · 15 squats</span></div><b>14 <small>RDS</small></b></div>
+    </div></div>
+  </article>
+
+  <article class="feat">
+    <span class="no c-rest" aria-hidden="true">03</span>
+    <div class="txt"><h3>Your music keeps playing</h3><p>Cues dip your playlist for a second instead of stopping it. Spotify, podcasts, anything.</p></div>
+    <div class="demo"><div class="card">
+      <div class="player"><span class="cover"><svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></span><div><b>Your playlist</b><span>Spotify · playing</span></div><svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg></div>
+      <svg class="vol" viewBox="0 0 440 120" role="img" aria-label="Music volume dips briefly at each cue and comes back">
+        <path d="M0 30 H96 C106 30 108 84 118 84 H150 C160 84 162 30 172 30 H256 C266 30 268 84 278 84 H310 C320 84 322 30 332 30 H440 V120 H0 Z" fill="rgba(52,195,255,0.12)"/>
+        <path d="M0 30 H96 C106 30 108 84 118 84 H150 C160 84 162 30 172 30 H256 C266 30 268 84 278 84 H310 C320 84 322 30 332 30 H440" fill="none" stroke="#34C3FF" stroke-width="4" stroke-linecap="round"/>
+        <rect x="100" y="96" width="68" height="22" rx="11" fill="#22302A"/><text x="134" y="111" text-anchor="middle" font-family="Archivo, sans-serif" font-size="12" font-weight="800" fill="#4BDE7F">“WORK”</text>
+        <rect x="258" y="96" width="72" height="22" rx="11" fill="#1A2A3A"/><text x="294" y="111" text-anchor="middle" font-family="Archivo, sans-serif" font-size="12" font-weight="800" fill="#34C3FF">“REST”</text>
+        <text x="0" y="18" font-family="Archivo, sans-serif" font-size="12" font-weight="700" fill="#9AA5B3">MUSIC VOLUME</text>
+      </svg>
+    </div></div>
+  </article>
+
+  <article class="feat">
+    <span class="no c-work" aria-hidden="true">04</span>
+    <div class="txt"><h3>Runs with the screen locked</h3><p>Lock the phone and keep training. On iPhone the countdown sits on the Lock Screen, on Android in a notification with Pause and Next.</p></div>
+    <div class="demo"><div class="locks" role="img" aria-label="iPhone Lock Screen with a live Fitmer countdown and an Android lock screen with the Fitmer notification">
+      <div class="device ios"><div class="lock" style="background-image: linear-gradient(180deg, rgba(10,14,20,.25), rgba(10,14,20,.55)), url(/landing/img/wall-ios.webp)">
+        <span class="island"></span>
+        <span class="lk"><svg width="11" height="13" viewBox="0 0 24 28" fill="currentColor"><path d="M6 12V8a6 6 0 0112 0v4h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V14a2 2 0 012-2zm3 0h6V8a3 3 0 00-6 0z"/></svg></span>
+        <span class="d">Friday, November 20</span><span class="clock">7:42</span>
+        <!-- Как ios/FitmerLiveActivity/FitmerLiveActivity.swift (Lock Screen): бейдж F + режим цветом фазы,
+             справа раунды; крупный общий остаток «2:52 / 4:00»; полоса общего прогресса. -->
+        <div class="la"><div class="la-h"><span class="bf">F</span><b>TABATA</b><span>8 ROUNDS</span></div><div class="la-t"><b>2:52</b><span>/ 4:00</span></div><div class="bar"><i></i></div></div>
+        <span class="home"></span>
+      </div></div>
+      <div class="device droid"><div class="lock" style="background-image: linear-gradient(180deg, rgba(10,14,20,.2), rgba(10,14,20,.6)), url(/landing/img/wall-android.webp)">
+        <span class="punch"></span>
+        <span class="clock">7:42</span><span class="d">Fri, Nov 20</span>
+        <!-- Как WorkoutService.kt: заголовок — фаза, хронометр отсчитывает в шапке, текст — режим и раунд,
+             действия Pause и Next. -->
+        <div class="notif">
+          <div class="nh"><span class="ic">F</span>Fitmer<i>•</i><b>0:12</b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <b class="nt">Work</b><span class="nx">Tabata · round 3/8</span>
+          <div class="na"><span>Pause</span><span>Next</span></div>
+        </div>
+        <span class="home"></span>
+      </div></div>
+    </div></div>
+  </article>
+
+  <article class="feat" id="devices">
+    <span class="no c-rest" aria-hidden="true">05</span>
+    <div class="txt"><h3>On your wrist and TV</h3><p>Apple Watch and Wear OS with strong vibrations and heart rate. Android TV for the big screen. Workouts are saved to Apple Health and Health Connect.</p></div>
+    <div class="demo"><div class="devices" role="img" aria-label="Fitmer on a smartwatch and on a TV">
+      <div class="watch"><div class="band"></div><div class="body"><div class="face"><small>WORK</small><b>0:17</b><span><svg width="14" height="14" viewBox="0 0 24 24" fill="#FF5247" aria-hidden="true"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg>142</span></div></div><div class="band b"></div></div>
+      <div class="tv"><div class="scr"><div class="in"><div><small>REST</small><b>0:08</b></div><div class="nx"><small>UP NEXT</small><b>Work · 0:20</b><span>3 / 8</span></div></div></div><div class="stand"></div></div>
+    </div></div>
+  </article>
+
+  <article class="feat" id="video">
+    <span class="no c-prep" aria-hidden="true">06</span>
+    <div class="txt"><h3>The timer in your video</h3><p>Film your set with the timer right in the frame. Proof for an online challenge, a check-in for your coach or a post for your followers, no editing needed.</p></div>
+    <div class="demo"><div class="film">
+      <img src="/landing/img/kettlebell-squat-color.webp" alt="" width="720" height="1080" loading="lazy">
+      <div class="vign"></div>
+      <div class="ph"><div class="ph-in">
+        <img src="/landing/img/kettlebell-squat-color.webp" alt="Athlete doing a kettlebell squat, filmed with the Fitmer timer in the frame" width="720" height="1080" loading="lazy">
+        <span class="rec"><i></i>0:41</span>
+        <div class="plate"><div class="stripe"><span>FITMER</span></div><div class="body"><div class="s"><span class="c-work">WORK</span><span>TABATA</span></div><span class="t">0:12</span><span class="m">Round 3/8</span></div></div>
+      </div></div>
+    </div></div>
+  </article>
+</section>
+
+<section class="final">
+  <div class="copy">
+    <span class="eyebrow">Ready when you are</span>
+    <h2>Your next workout,<br><span>counted out loud.</span></h2>
+    <p>On iPhone and Android, with Apple Watch, Wear OS and Android TV.</p>
+    <div class="stores">
+      <a class="badge" href="https://apps.apple.com/app/apple-store/id1509055701?pt=121440697&amp;mt=8&amp;ct=site" data-gc="store-ios-final"><img src="/landing/badges/app-store-en.svg" alt="Download Fitmer on the App Store" width="150" height="50"></a>
+      <a class="badge" href="https://play.google.com/store/apps/details?id=com.vivchar.fitmer&amp;referrer=utm_source%3Dsite%26utm_medium%3Dweb%26utm_campaign%3Dlanding" data-gc="store-android-final"><img src="/landing/badges/google-play-en.png" alt="Get Fitmer on Google Play" width="168" height="50"></a>
+    </div>
+    <a class="more" href="/online/" data-gc="online-final">Or try it online, no install →</a>
+  </div>
+  <div class="scan">
+    <div class="app-id"><span class="icon" aria-hidden="true"><b>FIT</b><b>MER</b></span><div><b>Fitmer</b><span>Interval timer</span></div></div>
+    <img class="qr" src="/landing/qr-site.svg" width="168" height="168" alt="QR code: opens Fitmer in the App Store or Google Play on your phone" loading="lazy">
+    <span class="hint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3M21 14v7h-7"/></svg>Scan with your phone camera</span>
+  </div>
+</section>
+</main>
+
+<footer>
+  <a class="brand" href="/" aria-label="Fitmer, made for athletes"><span class="mark">FIT<span>MER</span></span><span class="tagline">Made for athletes</span></a>
+  <nav aria-label="Links">
+    <a href="https://www.youtube.com/@fitmerapp" rel="noopener">YouTube</a>
+    <a href="https://www.instagram.com/fitmer.app/" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@fitmerapp" rel="noopener">TikTok</a>
+    <a href="/online/">Try online</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
+</footer>
+</div>
+<!-- Телефон: липкая кнопка стора под платформу, появляется, когда кнопки hero ушли с экрана. -->
+<a class="mbar" id="mbar" href="https://apps.apple.com/app/apple-store/id1509055701?pt=121440697&amp;mt=8&amp;ct=site" data-ios="https://apps.apple.com/app/apple-store/id1509055701?pt=121440697&amp;mt=8&amp;ct=site" data-android="https://play.google.com/store/apps/details?id=com.vivchar.fitmer&amp;referrer=utm_source%3Dsite%26utm_medium%3Dweb%26utm_campaign%3Dlanding" data-gc="store-sticky" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="mbar-t">Get it on the App Store</span></a>
+</body>
+</html>

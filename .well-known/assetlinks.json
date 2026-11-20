@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.vivchar.fitmer",
+      "sha256_cert_fingerprints": [
+        "26:9A:9B:8E:C6:81:90:2F:CA:B5:4B:A4:18:83:7C:1A:4B:5C:AC:3B:8B:FD:73:D2:D2:3C:0D:3A:59:6E:9A:6C",
+        "17:BC:60:05:BB:8B:03:2F:8B:E9:D5:66:3E:1A:08:69:D8:D2:D0:68:CA:83:43:8B:ED:F4:2E:92:8C:3A:1E:54"
+      ]
+    }
+  }
+]

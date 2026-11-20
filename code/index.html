@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#1F242B">
+  <title>Fitmer — код из рилса</title>
+  <!-- Код награды из рилса (docs/publishing/install-attribution.md).
+       С кодом в адресе (?code=FITMER-XXXX — так шлёт кнопка «Установить Fitmer» из
+       tools/ig-codes): показывает код, что он открывает, «Копировать» и стор.
+       Без кода (переход с /start): инструкция, как получить код. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fitmer">
+  <meta property="og:title" content="Your Fitmer code">
+  <meta property="og:description" content="Copy the code, install Fitmer and enter it in Settings.">
+  <meta property="og:image" content="https://fitmer.web.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fitmer.web.app/og-image.png">
+  <link rel="icon" href="/favicon.png">
+  <style>
+    /* Токены дизайн-системы Fitmer, тема Classic · Dark (lib/ui, артефакт DS). */
+    @font-face { font-family: Archivo; src: url(/fonts/Archivo-Variable.ttf) format("truetype"); font-weight: 100 900; font-display: swap; }
+    @font-face { font-family: Oswald; src: url(/fonts/Oswald-Variable.ttf) format("truetype"); font-weight: 200 700; font-display: swap; }
+    :root {
+      --ground: #1F242B; --surface: #272D36; --surface-inset: #1F242B; --hairline: rgba(255,255,255,0.06);
+      --ink: #EEF1F4; --ink-strong: #FFFFFF; --ink-muted: #9AA5B3; --ink-faint: #6C7785;
+      --brand: #4BDE7F; --on-brand: #0E2417; --brand-soft: #173A26;
+      --rim-panel: inset 0 1px 0 rgba(255,255,255,0.10); --rim-control: inset 0 1px 0 rgba(255,255,255,0.12);
+      --rim-accent: inset 0 1px 0 rgba(255,255,255,0.35); --rim-inset: inset 0 1px 0 rgba(0,0,0,0.35);
+      --ui: Archivo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --num: Oswald, "Arial Narrow", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--ground); color: var(--ink); font: 400 16px/1.45 var(--ui); }
+    main { min-height: 100vh; min-height: 100dvh; max-width: 440px; margin: 0 auto;
+      padding: calc(20px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) 0 max(18px, env(safe-area-inset-left));
+      display: flex; flex-direction: column; gap: 18px; }
+    .mark { font-weight: 900; font-size: 22px; letter-spacing: .5px; color: var(--ink-strong); line-height: 1; }
+    .mark span { color: var(--brand); }
+    h1 { margin: 0; font-size: 28px; line-height: 1.08; font-weight: 900; color: var(--ink-strong); text-wrap: balance; }
+    .sub { margin: -6px 0 0; font-size: 15px; color: var(--ink-muted); }
+
+    .codebox { display: flex; flex-direction: column; gap: 12px; border-radius: 26px; background: var(--surface); box-shadow: var(--rim-panel); padding: 16px; }
+    .what { display: flex; gap: 12px; align-items: center; }
+    .what .disc { width: 44px; height: 44px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; flex: none; }
+    .what b { display: block; font-size: 17px; }
+    .what span { display: block; font-size: 14px; color: var(--ink-muted); }
+    .code { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 18px; border-radius: 999px;
+      background: var(--surface-inset); box-shadow: var(--rim-inset); }
+    .code output { flex: 1; font: 600 20px ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 1px; color: var(--ink-strong);
+      user-select: all; -webkit-user-select: all; overflow-wrap: anywhere; }
+    .copied { min-height: 18px; margin-top: -4px; font-size: 13px; color: var(--brand); text-align: center; }
+
+    .steps { border-radius: 26px; background: var(--surface); box-shadow: var(--rim-panel); padding: 4px 0; margin: 0; list-style: none; }
+    .steps li { display: flex; gap: 14px; padding: 16px; align-items: flex-start; }
+    .steps li + li { border-top: 1px solid var(--hairline); }
+    .steps .n { display: block; font: 600 28px/1 var(--num); color: var(--brand); width: 18px; flex: none; font-variant-numeric: tabular-nums; }
+    .steps .n.done { color: var(--ink-faint); }
+    .steps b { display: block; font-size: 16px; }
+    .steps span { display: block; font-size: 14px; color: var(--ink-muted); }
+    .path { display: inline-flex !important; gap: 6px; align-items: center; margin-top: 6px; padding: 6px 12px; border-radius: 999px;
+      font-weight: 800; color: var(--ink) !important; background: var(--surface-inset); box-shadow: var(--rim-inset); }
+
+    .btn { display: flex; align-items: center; justify-content: center; gap: 10px; height: 58px; padding: 0 22px;
+      border: 0; border-radius: 999px; font: 800 16px var(--ui); text-decoration: none; cursor: pointer; white-space: nowrap; }
+    .btn--primary { height: 62px; font-size: 17px; font-weight: 900; letter-spacing: .5px; text-transform: uppercase;
+      background: var(--brand); color: var(--on-brand); box-shadow: var(--rim-accent); width: 100%; }
+    .btn--secondary { background: var(--surface); color: var(--ink); box-shadow: var(--rim-control); }
+    .btn--sm { height: 46px; font-size: 15px; padding: 0 18px; }
+    .btn:focus-visible, a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+    .dock { position: sticky; bottom: 0; margin: auto calc(-1 * max(18px, env(safe-area-inset-left))) 0;
+      padding: 12px max(18px, env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      display: flex; flex-direction: column; gap: 8px; background: var(--ground); box-shadow: var(--rim-panel); }
+    .stores { display: flex; gap: 10px; }
+    .stores .btn { flex: 1; }
+    /* Мини-схема «где вводить код»: три кадра из DS (не скриншоты). Тексты — из T, как в приложении (app_*.arb). */
+    .steps li.wide { flex-wrap: wrap; }
+    .howto { flex-basis: calc(100% + 20px); display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; gap: 3px; margin: 4px -10px 0; }
+    .howto .arrow { align-self: center; margin-top: -30px; color: var(--brand); font: 700 16px var(--ui); }
+    .shot { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .frame { height: 112px; border-radius: 16px; background: var(--ground); box-shadow: var(--rim-inset); padding: 7px; overflow: hidden;
+      display: flex; flex-direction: column; gap: 6px; font-size: 10px; line-height: 1.2; }
+    .shot .cap { font-size: 11.5px; line-height: 1.25; color: var(--ink-muted); text-align: center; }
+    .howto .f-bar { display: flex; align-items: center; justify-content: space-between; }
+    .howto .f-mark { font-weight: 900; font-size: 10px; white-space: nowrap; color: var(--ink-strong); }
+    .howto .f-mark span { display: inline; font-size: inherit; color: var(--brand); }
+    .howto .f-gear { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--surface); box-shadow: 0 0 0 2px var(--brand), 0 0 12px rgba(75,222,127,.45);
+      display: grid; place-items: center; color: var(--ink-strong); }
+    .howto .f-card { border-radius: 9px; background: var(--surface); box-shadow: var(--rim-panel); height: 18px; }
+    .howto .f-card.dim { opacity: .55; }
+    .howto .f-label { font-size: 8px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--ink-faint); margin-top: 2px; }
+    .howto .f-row { border-radius: 9px; background: var(--surface); padding: 6px 7px; box-shadow: 0 0 0 2px var(--brand), 0 0 12px rgba(75,222,127,.35); }
+    .howto .f-row b { display: block; font-size: 10.5px; color: var(--ink-strong); }
+    .howto .f-row i { display: block; font-style: normal; font-size: 8.5px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .howto .f-sheet { margin: auto -3px -3px; border-radius: 12px 12px 8px 8px; background: var(--surface); box-shadow: var(--rim-panel); padding: 7px 6px; display: flex; flex-direction: column; gap: 5px; }
+    .howto .f-sheet b { font-size: 10.5px; color: var(--ink-strong); }
+    .howto .f-field { border-radius: 999px; background: var(--surface-inset); box-shadow: var(--rim-inset); padding: 4px 6px;
+      font: 600 8px ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink-strong); white-space: nowrap; overflow: hidden; }
+    .howto .f-btn { border-radius: 999px; background: var(--brand); color: var(--on-brand); font-weight: 900; font-size: 7.5px; letter-spacing: 0;
+      text-transform: uppercase; text-align: center; padding: 5px 2px; white-space: nowrap; overflow: hidden; box-shadow: var(--rim-accent); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="mark">FIT<span>MER</span></span>
+
+    <!-- С кодом: из лички -->
+    <section id="withCode" hidden style="display:contents">
+      <h1 data-t="ready"></h1>
+      <div class="codebox">
+        <div class="what">
+          <span class="disc"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16v10H4zM3 7h18v3H3zM12 7v13"/><path d="M12 7c-2-4-6-3-5 0M12 7c2-4 6-3 5 0"/></svg></span>
+          <div><b id="rTitle"></b><span id="rSub"></span></div>
+        </div>
+        <div class="code">
+          <output id="code"></output>
+          <button class="btn btn--secondary btn--sm" id="copy" type="button" data-t="copy"></button>
+        </div>
+        <div class="copied" id="copied" aria-live="polite"></div>
+      </div>
+      <ol class="steps">
+        <li><span class="n" id="n1">1</span><div><b data-t="s1"></b><span data-t="s1s"></span></div></li>
+        <li><span class="n">2</span><div><b data-t="s2"></b><span data-t="s2s"></span></div></li>
+        <li class="wide"><span class="n">3</span><div><b data-t="s3"></b><span data-t="s3s"></span></div><div class="howto"></div></li>
+      </ol>
+    </section>
+
+    <!-- Без кода: из шапки -->
+    <section id="noCode" hidden style="display:contents">
+      <h1 data-t="how"></h1>
+      <p class="sub" data-t="howSub"></p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b data-t="h1"></b><span data-t="h1s"></span></div></li>
+        <li><span class="n">2</span><div><b data-t="h2"></b><span data-t="h2s"></span></div></li>
+        <li><span class="n">3</span><div><b data-t="h3"></b><span data-t="h3s"></span></div></li>
+        <li class="wide"><span class="n">4</span><div><b data-t="h4"></b><span data-t="s3s"></span></div><div class="howto"></div></li>
+      </ol>
+    </section>
+
+    <template id="howtoTpl">
+      <div class="shot">
+        <div class="frame">
+          <div class="f-bar"><span class="f-mark">FIT<span>MER</span></span>
+            <span class="f-gear"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94a7.07 7.07 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 13.9 2.5h-3.84a.5.5 0 0 0-.49.42l-.36 2.54a7 7 0 0 0-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.68 8.98a.5.5 0 0 0 .12.64l2.03 1.58a7.07 7.07 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.22.39.3.6.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54c.04.24.25.42.49.42h3.84c.24 0 .45-.18.49-.42l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg></span></div>
+          <div class="f-card"></div><div class="f-card"></div><div class="f-card dim"></div>
+        </div>
+        <span class="cap" data-t="c1"></span>
+      </div>
+      <span class="arrow" aria-hidden="true">›</span>
+      <div class="shot">
+        <div class="frame">
+          <div class="f-card dim"></div>
+          <span class="f-label" data-t="about"></span>
+          <div class="f-row"><b data-t="enter"></b><i data-t="enterSub"></i></div>
+          <div class="f-card dim"></div>
+        </div>
+        <span class="cap" data-t="c2"></span>
+      </div>
+      <span class="arrow" aria-hidden="true">›</span>
+      <div class="shot">
+        <div class="frame">
+          <div class="f-sheet"><b data-t="enter"></b><span class="f-field" data-code></span><span class="f-btn" data-t="activate"></span></div>
+        </div>
+        <span class="cap" data-t="c3"></span>
+      </div>
+    </template>
+    <div class="dock">
+      <a class="btn btn--primary" id="main" href="https://fitmer.web.app/online/"></a>
+      <div class="stores" id="stores" hidden>
+        <a class="btn btn--secondary btn--sm" id="ios" href="#">App Store</a>
+        <a class="btn btn--secondary btn--sm" id="android" href="#">Google Play</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    // Те же адреса и метки, что у /go (web/go/index.html): менять в обоих местах сразу.
+    var APPLE = 'https://apps.apple.com/app/apple-store/id1509055701?pt=121440697&mt=8&ct=';
+    var PLAY  = 'https://play.google.com/store/apps/details?id=com.vivchar.fitmer&referrer=';
+    var WEB   = 'https://fitmer.web.app/online/';
+    var GC    = 'https://fitmer.goatcounter.com/count';
+
+    var p = new URLSearchParams(location.search);
+    // Код: ?code=FITMER-XXXX (кнопка из лички) или #FITMER-XXXX. Чужой мусор не показываем.
+    var code = (p.get('code') || location.hash.replace(/^#/, '') || '').toUpperCase().trim();
+    if (!/^[A-Z0-9]{2,12}-[A-Z0-9]{2,12}$/.test(code)) code = '';
+    var ch = (p.get('ch') || (code ? 'ig-dm' : 'instagram')).toLowerCase();
+    if (!/^[a-z0-9_-]{1,40}$/.test(ch)) ch = 'other';
+    var camp = (p.get('c') || (code ? 'code' : 'bio')).toLowerCase();
+    if (!/^[a-z0-9_-]{1,40}$/.test(camp)) camp = 'code';
+
+    var ua = navigator.userAgent || '';
+    var isAndroid = /android/i.test(ua);
+    // Android проверяем первым: эмуляторы и часть устройств отдают platform MacIntel с тачем.
+    var isIOS = !isAndroid && (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+    var platform = isIOS ? 'ios' : isAndroid ? 'android' : 'web';
+
+    // ?lang=ru|en — принудительно (проверка вёрстки), иначе по языку браузера.
+    var lang = /^(ru|en)$/.test(p.get('lang') || '') ? p.get('lang') : /^(ru|uk|be|kk)\b/i.test(navigator.language || '') ? 'ru' : 'en';
+    var T = {
+      ru: { ready: 'Твой код готов', copy: 'Копировать', copied: 'Код скопирован', copyFail: 'Выдели код и скопируй вручную',
+        s1: 'Скопируй код', s1s: 'Кнопка выше. Потом останется только вставить.',
+        s2: 'Поставь Fitmer', s2s: 'Кнопка внизу. Уже стоит? Сразу шаг 3.',
+        s3: 'Вставь код в Fitmer', s3s: 'В приложении Fitmer:', settings: 'Настройки', enter: 'Ввести код',
+        enterSub: 'Мгновенно открыть функцию', about: 'О приложении', activate: 'Активировать',
+        c1: 'Шестерёнка справа вверху', c2: 'Пролистай до «О\u00a0приложении»', c3: 'Вставь и нажми «Активировать»',
+        how: 'Как получить код из рилса', howSub: 'Код открывает в Fitmer закрытую функцию. Займёт минуту.',
+        h1: 'Напиши кодовое слово', h1s: 'В комментарии под рилсом. Слово называем в конце ролика.',
+        h2: 'Получи код в директ', h2s: 'Придёт сам через пару секунд. Вида FITMER-XXXX.',
+        h3: 'Поставь Fitmer', h3s: 'Кнопка внизу ведёт в твой стор.', h4: 'Введи код',
+        ios: 'Поставить из App Store', android: 'Поставить из Google Play', web: 'Ввести код в веб-версии',
+        unknown: 'Закрытая функция Fitmer', unknownSub: 'Откроется сразу после ввода кода' },
+      en: { ready: 'Your code is ready', copy: 'Copy', copied: 'Code copied', copyFail: 'Select the code and copy it',
+        s1: 'Copy the code', s1s: 'Button above. Then you only need to paste it.',
+        s2: 'Install Fitmer', s2s: 'Button below. Already have it? Go to step 3.',
+        s3: 'Paste the code in Fitmer', s3s: 'In the Fitmer app:', settings: 'Settings', enter: 'Enter a code',
+        enterSub: 'Unlock a feature instantly', about: 'About', activate: 'Activate',
+        c1: 'Gear icon, top right', c2: 'Scroll down to “About”', c3: 'Paste and tap “Activate”',
+        how: 'How to get a code from a reel', howSub: 'A code unlocks a hidden feature in Fitmer. Takes a minute.',
+        h1: 'Comment the code word', h1s: 'Under the reel. We say the word at the end of the video.',
+        h2: 'Get the code in DMs', h2s: 'It arrives in a few seconds. Looks like FITMER-XXXX.',
+        h3: 'Install Fitmer', h3s: 'The button below opens your store.', h4: 'Enter the code',
+        ios: 'Get it on the App Store', android: 'Get it on Google Play', web: 'Enter the code on the web',
+        unknown: 'A hidden Fitmer feature', unknownSub: 'Unlocks as soon as you enter the code' }
+    }[lang];
+    // Что открывает код. Коды — из lib/core/rewards/rewards_config_full.dart, названия — из app_*.arb.
+    // Кода нет в списке — общая подпись; ничего не ломается.
+    var REWARDS = {
+      'FITMER-FLSH': { ru: ['Фонарик', 'Вспышка на каждом раунде'], en: ['Flashlight', 'Flash on every round'] },
+      'FITMER-FLSC': { ru: ['Вспышка экрана', 'Экран вспыхивает на каждом сигнале'], en: ['Screen flash', 'The screen flashes on every signal'] },
+      'FITMER-LEAD': { ru: ['Начало тиканья', 'За сколько секунд до конца тикать'], en: ['Tick lead-in', 'When the countdown ticking starts'] },
+      'FITMER-TMTR': { ru: ['Звук «Метроном»', 'Новый звук тиканья'], en: ['“Metronome” sound', 'A new ticking sound'] },
+      'FITMER-SHCK': { ru: ['Сигнал «Хоккейный зуммер»', 'Новый звук конца интервала'], en: ['“Hockey buzzer” signal', 'A new end-of-interval sound'] },
+      'FITMER-SHRN': { ru: ['Сигнал «Сигнальный рожок»', 'Новый звук конца интервала'], en: ['“Air horn” signal', 'A new end-of-interval sound'] },
+      'FITMER-SGYM': { ru: ['Сигнал «Свисток зала»', 'Новый звук конца интервала'], en: ['“Gym whistle” signal', 'A new end-of-interval sound'] },
+      'FITMER-SBXG': { ru: ['Сигнал «Боксёрский гонг»', 'Новый звук конца интервала'], en: ['“Boxing gong” signal', 'A new end-of-interval sound'] },
+      'FITMER-TDGT': { ru: ['Звук «Цифровой тик»', 'Новый звук тиканья'], en: ['“Digital tick” sound', 'A new ticking sound'] }
+    };
+    document.documentElement.lang = lang;
+    var tpl = document.getElementById('howtoTpl');
+    document.querySelectorAll('.howto').forEach(function (h) { h.appendChild(tpl.content.cloneNode(true)); });
+    document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = T[el.getAttribute('data-t')]; });
+
+    document.querySelectorAll('[data-code]').forEach(function (el) { el.textContent = code || 'FITMER-XXXX'; });
+    var view = code ? 'withCode' : 'noCode';
+    document.getElementById(view).hidden = false;
+
+    if (code) {
+      var r = REWARDS[code] ? REWARDS[code][lang] : [T.unknown, T.unknownSub];
+      document.getElementById('rTitle').textContent = r[0];
+      document.getElementById('rSub').textContent = r[1];
+      document.getElementById('code').textContent = code;
+      var copied = document.getElementById('copied');
+      document.getElementById('copy').addEventListener('click', function () {
+        var ok = function () { copied.textContent = T.copied; document.getElementById('n1').classList.add('done'); count('copy'); };
+        var fail = function () {
+          var sel = window.getSelection(), rg = document.createRange();
+          rg.selectNodeContents(document.getElementById('code')); sel.removeAllRanges(); sel.addRange(rg);
+          try { if (document.execCommand('copy')) { ok(); return; } } catch (e) {}
+          copied.textContent = T.copyFail;
+        };
+        try { navigator.clipboard.writeText(code).then(ok, fail); } catch (e) { fail(); }
+      });
+    }
+
+    // ---- ссылки ----
+    var iosUrl = APPLE + encodeURIComponent(ch);
+    var playUrl = PLAY + encodeURIComponent('utm_source=' + ch + '&utm_medium=social&utm_campaign=' + camp);
+    var webUrl = WEB + '?utm_source=' + encodeURIComponent(ch) + '&utm_medium=social';
+    var main = document.getElementById('main');
+    document.getElementById('ios').href = iosUrl;
+    document.getElementById('android').href = playUrl;
+    if (platform === 'ios') { main.href = iosUrl; main.textContent = T.ios; }
+    else if (platform === 'android') { main.href = playUrl; main.textContent = T.android; }
+    else { main.href = webUrl; main.textContent = T.web; document.getElementById('stores').hidden = false; }
+
+    // ---- клики: /code/<канал>/<событие> в GoatCounter (сам код не отправляем) ----
+    function count(ev) {
+      try {
+        var b = GC + '?p=' + encodeURIComponent('/code/' + ch + '/' + ev);
+        if (navigator.sendBeacon) navigator.sendBeacon(b); else { var i = new Image(); i.src = b; }
+      } catch (e) {}
+    }
+    count((code ? 'view-code-' : 'view-howto-') + platform);
+    main.addEventListener('click', function () { count(platform === 'web' ? 'web' : 'store-' + platform); });
+    document.getElementById('ios').addEventListener('click', function () { count('store-ios'); });
+    document.getElementById('android').addEventListener('click', function () { count('store-android'); });
+  })();
+  </script>
+</body>
+</html>

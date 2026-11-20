@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Fitmer — page not found</title>
+  <!-- Нужен зеркалу fitmer.tom.ru: у GitHub Pages нет rewrites и redirects, на любой
+       неизвестный путь он отдаёт этот файл. Firebase делает то же правилами в
+       firebase.json и сюда попадает только на настоящий 404.
+       - /online/<экран>: Flutter-приложение — уводим на /online/?p=<путь>, web/index.html
+         восстанавливает путь до загрузки приложения;
+       - старые адреса экранов в корне (/settings, /privacy…) — на /online/<путь>. -->
+  <script>
+    (function () {
+      var path = location.pathname;
+      var APP = /^\/(setup|run|results|settings|about|rewards|stats|famous|reminders|paywall|privacy|terms|dev)(\/|$)/;
+      if (path.indexOf('/online/') === 0 && path !== '/online/') {
+        location.replace('/online/?p=' + encodeURIComponent(path.slice('/online'.length) + location.search) + location.hash);
+      } else if (APP.test(path)) {
+        location.replace('/online' + path + location.search + location.hash);
+      }
+    })();
+  </script>
+  <style>
+    body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      background: #1F242B; color: #EEF1F4; font: 16px/1.5 system-ui, -apple-system, sans-serif; text-align: center; padding: 24px; }
+    b { font-size: 26px; font-weight: 900; } b span { color: #4BDE7F; }
+    a { color: #4BDE7F; }
+  </style>
+</head>
+<body>
+  <b>FIT<span>MER</span></b>
+  <p>This page doesn’t exist.</p>
+  <p><a href="/">Fitmer home</a> · <a href="/online/">Open the timer</a></p>
+</body>
+</html>

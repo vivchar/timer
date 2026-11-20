@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["6G7C2DCPD5.app.vivchar.fitmer"],
+        "components": [
+          { "/": "/workout", "comment": "Ссылка на тренировку (docs/specs/workout-share-links.md)" }
+        ]
+      }
+    ]
+  }
+}
